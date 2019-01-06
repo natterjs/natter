@@ -1,5 +1,3 @@
 #Voicebox
 
 Programmable voice recongnition
-
-
