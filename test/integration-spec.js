@@ -15,7 +15,7 @@ describe('Application launch', function () {
   })
 
   afterEach(function () {
-    if (app && app.isRunning()) {
+    if (this.app && this.app.isRunning()) {
       return this.app.stop();
     }
   })
