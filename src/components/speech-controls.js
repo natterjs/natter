@@ -1,5 +1,5 @@
 import React from 'react';
-const speech = require('../services/speech/google-cloud-speech')
+const speech = require('../services/speech')
 
 export default class SpeechControls extends React.Component {
   render() {
