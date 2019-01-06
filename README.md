@@ -2,4 +2,5 @@
 
 Programmable voice recongnition
 
-![Design Image](./voice-box-plugs-adapters.png)
+## Plugs and adapters design
+![Design Image](./voice-box-plugs-adapters.png =500x)
