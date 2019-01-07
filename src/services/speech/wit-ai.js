@@ -1,5 +1,8 @@
+// Libraries
 const record = require('node-record-lpcm16')
 const request = require('request')
+
+// Configuration
 const config = require('../../config/config')
 
 exports.parseResult = function (err, resp, body) {

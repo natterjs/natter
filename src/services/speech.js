@@ -19,5 +19,12 @@ const adapters = {
   "null-adapter": nullAdapter,
 }
 
+let adapter = adapters[config.adapter]
+
 // Export the Speech Adapters
-module.exports = adapters[config.adapter]
+
+module.exports = {
+  start: adapter.start,
+  stop: adapter.stop,
+  adapters: adapters
+}
