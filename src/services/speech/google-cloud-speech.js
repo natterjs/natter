@@ -31,7 +31,7 @@ const recognizeStream = () => {
     .streamingRecognize(request)
     .on('error', console.error)
     .on('data', data => {
-      data.results[0] && data.results[0].alternatives[0] ? sendResults(data) : startRecording()
+      data.results[0] && data.results[0].alternatives[0] ? sendResults(data) : restartRecording()
     })
   )
 }
@@ -50,10 +50,15 @@ const startRecording = () => {
     threshold: 0,
     verbose: false,
     recordProgram: 'rec',
-    silence: '10.0',
+    silence: '20.0',
   })
   .on('error', console.error)
   .pipe(recognizeStream())
+}
+
+const restartRecording = () => {
+  record.stop()
+  startRecording()
 }
 
 // Start recording and send the microphone input to the Speech API
