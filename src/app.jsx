@@ -2,13 +2,12 @@
 import React from 'react';
 
 // Components
-import SpeechControls from './components/speech-controls.js'
+import Navbar from './components/containers/navbar.js'
 
 export default class App extends React.Component {
   render() {
     return (<div>
-      <h2>Welcome to Voicebox!</h2>
-      <SpeechControls />
+      <Navbar />
     </div>);
   }
 }
