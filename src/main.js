@@ -22,11 +22,14 @@ if (isDevMode) {
 }
 
 const createWindow = async () => {
+
+  const options = {
+    width: 500,
+    height: 300,
+    alwaysOnTop: true
+  }
   // Create the browser window.
-  mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 400,
-  });
+  mainWindow = new BrowserWindow(options);
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`);

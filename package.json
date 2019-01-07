@@ -6,6 +6,7 @@
   "main": "src/main.js",
   "scripts": {
     "start": "NODE_ENV=development electron-forge start",
+    "demo": "NODE_ENV=production electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
