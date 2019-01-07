@@ -4,10 +4,10 @@
 
 // Libraries
 const record = require('node-record-lpcm16');
-const speech = require('@google-cloud/speech');
+const googleSpeech = require('@google-cloud/speech');
 
 // Creates a client
-const client = new speech.SpeechClient();
+const client = new googleSpeech.SpeechClient();
 
 // Configure request
 const encoding = 'LINEAR16';
