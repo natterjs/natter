@@ -5,7 +5,7 @@ import { enableLiveReload } from 'electron-compile';
 const ipcMain = require( 'electron').ipcMain;
 
 ipcMain.on('speech-broadcast', function(event, arg) {
-  console.log(arg);
+  console.log(`Main Recieved -> ${arg}`);
 });
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -22,8 +22,8 @@ if (isDevMode) {
 const createWindow = async () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 400,
   });
 
   // and load the index.html of the app.

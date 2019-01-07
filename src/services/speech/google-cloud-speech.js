@@ -53,7 +53,7 @@ const startRecording = () => {
     threshold: 0,
     verbose: false,
     recordProgram: 'rec',
-    silence: '30.0',
+    silence: '15.0',
   })
   .on('error', console.error)
   .pipe(recognizeStream())
