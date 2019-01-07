@@ -1,4 +1,7 @@
+// Libraries
 import React from 'react';
+
+// Components
 import SpeechControls from './components/speech-controls.js'
 
 export default class App extends React.Component {
