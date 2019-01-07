@@ -2,4 +2,5 @@ node_modules
 out
 .eslintcache
 npm-debug.log
-*.env
+config.js
+
