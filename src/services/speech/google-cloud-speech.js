@@ -41,7 +41,11 @@ const recognizeStream = () => {
 
 // Send the results
 const sendResults = (data) => {
-  speechBroadcaster(`Google Transcript: ${data.results[0].alternatives[0].transcript}`)
+  let message = {
+    text: data.results[0].alternatives[0].transcript,
+    complete: data.results[0].isFinal
+  }
+  speechBroadcaster(message)
 }
 
 // Start recording and send the microphone input to the Speech API
