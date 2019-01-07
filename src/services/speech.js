@@ -9,22 +9,15 @@ const google = require('./speech/google-cloud-speech')
 const witAI = require('./speech/wit-ai')
 const nullAdapter = require('./speech/null-adapter')
 
-// Configuration
-const config = require('../config/config')
-
 // Availble Adapters
 const adapters = {
-  "google": google,
-  "wit-ai": witAI,
   "null-adapter": nullAdapter,
+  "google-speech-api": google,
+  "wit-ai-api": witAI
 }
-
-let adapter = adapters[config.adapter]
 
 // Export the Speech Adapters
 
 module.exports = {
-  start: adapter.start,
-  stop: adapter.stop,
   adapters: adapters
 }
