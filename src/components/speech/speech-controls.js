@@ -7,7 +7,7 @@ export default class SpeechControls extends React.Component {
     super()
     this.state = {
       recording: false,
-      adapter: 'null-adapter'
+      adapter: 'no-adapter'
     }
   }
 

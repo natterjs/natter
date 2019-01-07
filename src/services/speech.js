@@ -11,7 +11,7 @@ const nullAdapter = require('./speech/null-adapter')
 
 // Availble Adapters
 const adapters = {
-  "null-adapter": nullAdapter,
+  "no-adapter": nullAdapter,
   "google-speech-api": google,
   "wit-ai-api": witAI
 }
