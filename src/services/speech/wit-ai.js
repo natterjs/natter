@@ -6,6 +6,7 @@ const request = require('request')
 const config = require('../../config/config')
 
 exports.parseResult = function (err, resp, body) {
+  console.error("Broadcasting is not supported for this API")
   console.log(body)
 }
 
