@@ -10,7 +10,7 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "eslint --cache --color --ext .jsx,.js src",
-    "test": "mocha --recursive"
+    "test": "NODE_ENV=test mocha --recursive"
   },
   "keywords": [],
   "author": "simon",
