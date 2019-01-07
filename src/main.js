@@ -1,11 +1,13 @@
 import { app, BrowserWindow } from 'electron';
 import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 import { enableLiveReload } from 'electron-compile';
+import executeString from './services/executor/robot-js-executor.js'
 
 const ipcMain = require( 'electron').ipcMain;
 
 ipcMain.on('speech-broadcast', function(event, arg) {
-  console.log(`Main Recieved -> ${arg}`);
+  console.log(`Main Recieved -> ${arg.text}`);
+  executeString(arg);
 });
 
 // Keep a global reference of the window object, if you don't, the window will
