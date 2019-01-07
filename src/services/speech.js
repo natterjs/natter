@@ -17,7 +17,6 @@ const adapters = {
 }
 
 // Export the Speech Adapters
-
 module.exports = {
   adapters: adapters
 }
