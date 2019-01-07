@@ -1,11 +1,12 @@
 // A simple null adapter
+import speechBroadcaster from '../broadcaster/speech-broadcaster'
 
 const startRecording = () => {
-  console.log("Starting the null adapter")
+  speechBroadcaster("Starting the null adapter")
 }
 
 const stopRecording = () => {
-  console.log("Stopping the null adapter")
+  speechBroadcaster("Stopping the null adapter")
 }
 
 module.exports.start = startRecording
