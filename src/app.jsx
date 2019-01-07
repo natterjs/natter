@@ -2,7 +2,7 @@
 import React from 'react';
 
 // Components
-import Navbar from './components/containers/navbar.js'
+import Navbar from './components/navigation/navbar.js'
 
 // Configuration
 import config from './config/config'
