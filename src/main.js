@@ -6,9 +6,12 @@ import { enableLiveReload } from 'electron-compile';
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
-const isTestMode = process.env.NODE_ENV === 'test'
+const isDevMode = process.env.NODE_ENV === 'development'
 
-if (!isTestMode) enableLiveReload({ strategy: 'react-hmr' });
+if (isDevMode) {
+  require('dotenv').config({path:__dirname+'/../.dev.env'})
+  enableLiveReload({ strategy: 'react-hmr' });
+}
 
 const createWindow = async () => {
   // Create the browser window.
@@ -21,7 +24,7 @@ const createWindow = async () => {
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
   // Open the DevTools.
-  if (!isTestMode) {
+  if (isDevMode) {
     await installExtension(REACT_DEVELOPER_TOOLS);
     mainWindow.webContents.openDevTools();
   }

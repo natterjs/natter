@@ -5,7 +5,7 @@
   "description": "Pluggable voice recognition for every desktop environment",
   "main": "src/main.js",
   "scripts": {
-    "start": "electron-forge start",
+    "start": "NODE_ENV=development electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
