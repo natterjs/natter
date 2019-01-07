@@ -5,5 +5,8 @@
 // called
 
 const google = require('./speech/google-cloud-speech')
+const witAI = require('./speech/wit-ai')
 
-module.exports = google
+let speech = witAI
+
+module.exports = speech
