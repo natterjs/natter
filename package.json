@@ -5,7 +5,7 @@
   "description": "Pluggable voice recognition for every desktop environment",
   "main": "src/main.js",
   "scripts": {
-    "start": "electron-forge start",
+    "start": "NODE_ENV=development electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
@@ -62,6 +62,7 @@
     "babel-plugin-transform-es2015-classes": "^6.24.1",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
+    "dotenv": "^6.2.0",
     "electron-forge": "^5.2.3",
     "electron-prebuilt-compile": "4.0.0",
     "eslint": "^3.19.0",
