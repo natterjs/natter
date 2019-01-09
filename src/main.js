@@ -2,12 +2,15 @@ import { app, BrowserWindow } from 'electron';
 import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 import { enableLiveReload } from 'electron-compile';
 import executeString from './services/executor/robot-js-executor.js'
+import broadcastParser from './services/parser/broadcast-parser'
 
 const ipcMain = require( 'electron').ipcMain;
 
-ipcMain.on('speech-broadcast', function(event, arg) {
-  console.log(`Main Recieved -> ${arg.text}`);
-  executeString(arg);
+ipcMain.on('speech-broadcast', function(event, data) {
+  console.log(`Main Recieved ->`);
+  console.log(data);
+  let parsedString = broadcastParser(data);
+  executeString(data);
 });
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -23,9 +26,8 @@ if (isDevMode) {
 const createWindow = async () => {
 
   const options = {
-    width: 500,
-    height: 300,
-    alwaysOnTop: true
+    width: 1000,
+    height: 600
   }
   // Create the browser window.
   mainWindow = new BrowserWindow(options);
