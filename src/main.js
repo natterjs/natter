@@ -17,7 +17,6 @@ let mainWindow;
 const isDevMode = process.env.NODE_ENV === 'development'
 
 if (isDevMode) {
-  require('dotenv').config({path:__dirname+'/../.dev.env'})
   enableLiveReload({ strategy: 'react-hmr' });
 }
 
