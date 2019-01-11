@@ -1,6 +1,7 @@
 // Executors are used in order to send information to the system
+//
 // These executors use a consistent API which will read the commands
-// from the store and send them to the operators machine
+// sent by the parsers and send them to the operators machine
 
 import commands from './executor/robot-js-executor'
 

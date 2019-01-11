@@ -1,15 +1,17 @@
 import { app, BrowserWindow } from 'electron';
 import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 import { enableLiveReload } from 'electron-compile';
+
+// Services
 import executors from './services/executors'
-import broadcastParser from './services/parser/broadcast-parser'
+import parsers from './services/parsers'
 
 const ipcMain = require( 'electron').ipcMain;
 
 ipcMain.on('speech-broadcast', function(event, data) {
   console.log(`Main Recieved ->`);
   console.log(data);
-  let parsedString = broadcastParser(data);
+  parsers['speech'](data);
   executors['robot-js']['string'](data);
 });
 
