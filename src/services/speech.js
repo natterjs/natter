@@ -1,8 +1,12 @@
 // Speech loads a list of adapters from the speech folder
 //
 // Speech adapters must export the @start and @stop method
+//
 // The speech adapter should continue to record audio until it's @stop method is
 // called
+//
+// The speech adapter must broadcast back ontot the main thread so that
+// the speech can be analysed
 
 // Adapters
 const google = require('./speech/google-cloud-speech')

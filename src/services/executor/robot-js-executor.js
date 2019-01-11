@@ -16,4 +16,8 @@ const executeString = (data) => {
   }
 }
 
-export default executeString;
+const commands = {
+  string: executeString
+}
+
+export default commands;
