@@ -1,38 +1,38 @@
+// Electron
 import { app, BrowserWindow } from 'electron';
 import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 import { enableLiveReload } from 'electron-compile';
 
+// Libraries
+import Store from 'electron-store';
+
 // Services
-import executors from './services/executors'
-import parsers from './services/parsers'
+import executors from './services/executors';
+import parsers from './services/parsers';
 
-const ipcMain = require( 'electron').ipcMain;
-
-ipcMain.on('speech-broadcast', function(event, data) {
-  console.log(`Main Recieved ->`);
-  console.log(data);
-  parsers['speech'](data);
-  executors['robot-js']['string'](data);
-});
-
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-let mainWindow;
-
+// SetUp //
 const isDevMode = process.env.NODE_ENV === 'development'
-
 if (isDevMode) {
   enableLiveReload({ strategy: 'react-hmr' });
 }
+// Keep a global reference of the window object, if you don't, the window will
+// be closed automatically when the JavaScript object is garbage collected.
+let mainWindow;
+const store = new Store({
+  name: 'user-preferences',
+  defaults: {
+    windowBounds: { width: 800, height: 600 }
+  }
+});
 
 const createWindow = async () => {
-
-  const options = {
-    width: 1000,
-    height: 600
-  }
+  const {width, height} = store.get('windowBounds');
   // Create the browser window.
-  mainWindow = new BrowserWindow(options);
+  mainWindow = new BrowserWindow({
+    width: width,
+    height: height,
+    backgroundColor: '#2e2c29'
+  });
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`);
@@ -43,11 +43,12 @@ const createWindow = async () => {
     mainWindow.webContents.openDevTools();
   }
 
-  // Emitted when the window is closed.
+  mainWindow.on('resize', () => {
+    let { width, height } = mainWindow.getBounds();
+    store.set('windowBounds', { width, height });
+  });
+
   mainWindow.on('closed', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
     mainWindow = null;
   });
 };
@@ -74,5 +75,15 @@ app.on('activate', () => {
   }
 });
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
+
+
+// Encapsulating the speech broadcast callback function
+const ipcMain = require( 'electron').ipcMain;
+
+ipcMain.on('speech-broadcast', function(event, data) {
+  console.log(`Main Recieved ->`);
+  console.log(data);
+  parsers['speech'](data);
+  executors['robot-js']['string'](data);
+});
+
