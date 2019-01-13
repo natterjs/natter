@@ -1,37 +1,40 @@
 // Electron
-import { app, BrowserWindow } from 'electron';
-import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
-import { enableLiveReload } from 'electron-compile';
+import { app, BrowserWindow } from "electron";
+import installExtension, { REACT_DEVELOPER_TOOLS } from "electron-devtools-installer";
+import { enableLiveReload } from "electron-compile";
+import { ipcMain } from "electron"
 
 // Libraries
-import Store from 'electron-store';
+import Store from "electron-store";
 
 // Services
-import executors from './services/executors';
-import parsers from './services/parsers';
+import executors from "./services/executors";
+import parsers from "./services/parsers";
+import speech from "./services/speech";
 
 // SetUp //
-const isDevMode = process.env.NODE_ENV === 'development'
+const isDevMode = process.env.NODE_ENV === "development"
 if (isDevMode) {
-  enableLiveReload({ strategy: 'react-hmr' });
+  enableLiveReload({ strategy: "react-hmr" });
 }
-// Keep a global reference of the window object, if you don't, the window will
+// Keep a global reference of the window object, if you don"t, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
-const store = new Store({
-  name: 'user-preferences',
+const userPreferences = new Store({
+  name: "user-preferences",
   defaults: {
-    windowBounds: { width: 800, height: 600 }
+    windowBounds: { width: 800, height: 600 },
+    speechAdapter: "google-speech-api"
   }
 });
 
 const createWindow = async () => {
-  const {width, height} = store.get('windowBounds');
+  const {width, height} = userPreferences.get("windowBounds");
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: width,
     height: height,
-    backgroundColor: '#2e2c29'
+    backgroundColor: "#2e2c29"
   });
 
   // and load the index.html of the app.
@@ -43,12 +46,12 @@ const createWindow = async () => {
     mainWindow.webContents.openDevTools();
   }
 
-  mainWindow.on('resize', () => {
+  mainWindow.on("resize", () => {
     let { width, height } = mainWindow.getBounds();
-    store.set('windowBounds', { width, height });
+    userPreferences.set("windowBounds", { width, height });
   });
 
-  mainWindow.on('closed', () => {
+  mainWindow.on("closed", () => {
     mainWindow = null;
   });
 };
@@ -56,34 +59,40 @@ const createWindow = async () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on("ready", createWindow);
 
 // Quit when all windows are closed.
-app.on('window-all-closed', () => {
+app.on("window-all-closed", () => {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
+  if (process.platform !== "darwin") {
     app.quit();
   }
 });
 
-app.on('activate', () => {
-  // On OS X it's common to re-create a window in the app when the
+app.on("activate", () => {
+  // On OS X it"s common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
     createWindow();
   }
 });
 
+// Speech processing function used to inject into the speech api client
+const processSpeech = (data) => {
+  parsers["speech"](data);
+  executors["robot-js"]["string"](data);
+}
 
-
-// Encapsulating the speech broadcast callback function
-const ipcMain = require( 'electron').ipcMain;
-
-ipcMain.on('speech-broadcast', function(event, data) {
+// Encapsulating the speech broadcast callback function to start
+// the currently configured speech adapter
+ipcMain.on("toggle-speech", function(event, data) {
   console.log(`Main Recieved ->`);
   console.log(data);
-  parsers['speech'](data);
-  executors['robot-js']['string'](data);
+
+  const speechAdapter = userPreferences.get("speechAdapter");
+  const adapter = speech.adapters[speechAdapter]
+  data === "start" ? adapter.start(processSpeech) : adapter.stop();
 });
+
 

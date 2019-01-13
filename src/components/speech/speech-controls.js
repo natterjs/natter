@@ -1,6 +1,15 @@
 // Libraries
 import React from 'react';
 import { Button, Dropdown, Menu } from 'semantic-ui-react';
+import Store from "electron-store";
+
+// Services
+import broadcasters from '../../services/broadcasters'
+
+// Data
+const userPreferences = new Store({
+  name: "user-preferences"
+});
 
 export default class SpeechControls extends React.Component {
   constructor() {
@@ -24,12 +33,12 @@ export default class SpeechControls extends React.Component {
 
     const start = () => {
       toggleSpeech()
-      return adapter.start()
+      return broadcasters['client']('toggle-speech', 'start')
     }
 
     const stop = () => {
       toggleSpeech()
-      return adapter.stop()
+      return broadcasters['client']('toggle-speech', 'stop')
     }
 
     const selectOptions = (object) => {
@@ -44,6 +53,7 @@ export default class SpeechControls extends React.Component {
       this.setState({
         adapter: adapter
       })
+      return userPreferences.set("speechAdapter", adapter);
     }
 
     return (

@@ -5,10 +5,10 @@
 // This collection of broadcasters would be used outside the main thread and
 // and you would use them to broadcast back into the main channel
 
-import speechBroadcaster from './broadcaster/speech-broadcaster'
+import clientBroadcaster from './broadcaster/client-broadcaster'
 
 const broadcasters = {
-  speech: speechBroadcaster
+  client: clientBroadcaster
 }
 
 export default broadcasters

@@ -21,36 +21,35 @@ const request = {
   config: {
     encoding: encoding,
     sampleRateHertz: sampleRateHertz,
-    languageCode: languageCode,
+    languageCode: languageCode
   },
   interimResults: true, // If you want interim results, set this to true
   singleUtterance: true,
 };
 
 // Create a recognize stream
-const recognizeStream = () => {
+const recognizeStream = (processSpeech) => {
   return (
     client
     .streamingRecognize(request)
     .on('error', console.error)
     .on('data', data => {
-      data.results[0] && data.results[0].alternatives[0] ? sendResults(data) : restartRecording()
+      data.results[0] && data.results[0].alternatives[0] ? sendResults(data, processSpeech) : restartRecording(processSpeech)
     })
   )
 }
 
 // Send the results
-const sendResults = (data) => {
+const sendResults = (data, callback) => {
   let message = {
     text: data.results[0].alternatives[0].transcript,
     complete: data.results[0].isFinal
   }
-  broadcasters['speech'](message)
+  callback(message)
 }
 
 // Start recording and send the microphone input to the Speech API
-const startRecording = () => {
-  broadcasters['speech'](`Starting Google Speech API recording\n`)
+const startRecording = (processSpeech) => {
   record
   .start({
     sampleRateHertz: sampleRateHertz,
@@ -60,17 +59,16 @@ const startRecording = () => {
     silence: '15.0',
   })
   .on('error', console.error)
-  .pipe(recognizeStream())
+  .pipe(recognizeStream(processSpeech))
 }
 
-const restartRecording = () => {
+const restartRecording = (processSpeech) => {
   record.stop()
-  startRecording()
+  startRecording(processSpeech)
 }
 
 // Start recording and send the microphone input to the Speech API
 const stopRecording = () => {
-  broadcasters['speech'](`Stopping Google Speech API recording\n`)
   record.stop()
 }
 
