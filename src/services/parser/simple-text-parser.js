@@ -30,7 +30,7 @@ const sample = "slap camel foo bar lope camel new bar"
 console.log(parser.render(sample));
 console.log(parser.toTree(sample));
 
-const parse = () => {
+const parse = (data) => {
   let parsedData = parser.toTree(data.text)
   return parsedData
 }
