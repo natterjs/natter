@@ -1,16 +1,27 @@
-var assert = require('assert');
+import assert from 'assert'
 
-var simpleTextParser = '../../../src/services/parser/simple-text-parser.js'
+import simpleTextParser from '../../../src/services/parser/simple-text-parser.js'
 
 describe('Testing string parsing', function () {
  it('should allow setting rules for keys', function () {
-      // Arrange
-      var parser = simpleTextParser["addKey"]("slap", "enter")
-      // Act
-      var speech = "slap"
-      var parsedTree = simpleTextParser.parser(speech)
-      // Assert
-      var expectation = [{ type: 'key', value: 'enter', text: '' }]
-      assert.equal(parsedTree, expectation);
-    });
+    // Arrange
+    simpleTextParser["addKey"]("slap", "enter", "press")
+    simpleTextParser["addKey"]("zebra", "control+up", "hold")
+
+    const firstSpeech = { text: "slap" }
+    const secondSpeech = { text: "zebraslap"}
+
+    // Act
+    const firstParsingTree = simpleTextParser.parse(firstSpeech)
+    const secondParsingTree = simpleTextParser.parse(secondSpeech)
+
+    // Assert
+    const firstExpectation = [{ type: 'key', value: 'enter', event: "press" }]
+    const secondExpectation = [
+      { type: 'key', value: 'control+up', event: "hold" },
+      { type: 'key', value: 'enter', event: "press" }
+    ]
+    assert.deepEqual(firstParsingTree, firstExpectation);
+    assert.deepEqual(secondParsingTree, secondExpectation);
+  });
 })

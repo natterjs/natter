@@ -2,34 +2,21 @@
 import Parser from "simple-text-parser"
 import formatter from "voca"
 
-
-Parser.registerPreset("enter", /slap/);
-Parser.registerPreset("ctrl+left", /lope/);
-
 const parser = new Parser();
 
-// Add a key
-const addKey = (name, value) => {
-  parser.addPreset(name, function(arg) {
-    return { type: "key", value: value, text: "" }
-  });
+// A function for adding keys through a parser
+//
+// @param matcher -> String or regular expression for matching phrase
+// @param key -> A key or set of keys to be pressed
+// @param event -> An event type of press, hold, release
+
+const addKey = (matcher, key, event) => {
+  parser.addRule(matcher, () => {
+    return {type: "key", value: key, event: event}
+  })
 }
 
-// Add a regular expression matcher, with a format function
-const addFormat = (name, formatter) => {
-  const pattern = name += "(.*)";
-  const matcher = new RegExp(pattern,"ig");
-
-  parser.addRule(matcher, function(tag, clean_tag) {
-    return formatter(clean_tag)
-  });
-}
-
-const sample = "slap camel foo bar lope camel new bar"
-
-console.log(parser.render(sample));
-console.log(parser.toTree(sample));
-
+// Trigger the parse
 const parse = (data) => {
   let parsedData = parser.toTree(data.text)
   return parsedData
