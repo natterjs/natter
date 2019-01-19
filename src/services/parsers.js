@@ -11,9 +11,11 @@
 // analyses -> phrase.split(' ') -> etc.
 
 import speechParser from './parser/speech-parser'
+import simpleTextParser from './parser/simple-text-parser'
 
 const parsers = {
-  speech: speechParser
+  speech: speechParser,
+  text: simpleTextParser
 }
 
 export default parsers

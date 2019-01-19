@@ -80,7 +80,7 @@ app.on("activate", () => {
 
 // Speech processing function used to inject into the speech api client
 const processSpeech = (data) => {
-  parsers["speech"](data);
+  parsers["text"]["parse"](data);
   executors["robot-js"]["string"](data);
 }
 

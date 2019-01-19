@@ -16,7 +16,7 @@ export default class SpeechControls extends React.Component {
     super()
     this.state = {
       recording: false,
-      adapter: 'google-speech-api'
+      adapter: userPreferences.get("speechAdapter")
     }
   }
 

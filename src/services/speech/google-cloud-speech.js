@@ -50,6 +50,7 @@ const sendResults = (data, callback) => {
 
 // Start recording and send the microphone input to the Speech API
 const startRecording = (processSpeech) => {
+  console.log("Starting recording")
   record
   .start({
     sampleRateHertz: sampleRateHertz,

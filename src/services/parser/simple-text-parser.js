@@ -1,26 +1,29 @@
 // Libraries
-var Parser = require("simple-text-parser");
-var formatter = require('voca');
+import Parser from "simple-text-parser"
+import formatter from "voca"
 
+const parser = new Parser();
 
-Parser.registerPreset("enter", /slap/);
-Parser.registerPreset("ctrl+left", /lope/);
+// A function for adding keys through a parser
+//
+// @param matcher -> String or regular expression for matching phrase
+// @param key -> A key or set of keys to be pressed
+// @param event -> An event type of press, hold, release
 
-var parser = new Parser();
+const addKey = (matcher, key, event) => {
+  parser.addRule(matcher, () => {
+    return {type: "key", value: key, event: event}
+  })
+}
 
-parser.addPreset("enter", function(lope) {
-  return { type: "key", value: "enter", text: '' }
-});
+// Trigger the parse
+const parse = (data) => {
+  let parsedData = parser.toTree(data.text)
+  return parsedData
+}
 
-parser.addPreset("ctrl+left", function(lope) {
-  return { type: "key", value: "ctrl+left", text: '' }
-});
-
-parser.addRule(/camel(.*)/ig, function(tag, clean_tag) {
-  return formatter.camelCase(clean_tag)
-});
-
-var sample = "slap camel foo bar lope camel new bar"
-
-console.log(parser.render(sample));
-console.log(parser.toTree(sample));
+module.exports = {
+  parse: parse,
+  addKey: addKey,
+  addFormat: addFormat
+}
