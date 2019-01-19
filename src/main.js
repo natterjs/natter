@@ -24,7 +24,9 @@ const userPreferences = new Store({
   name: "user-preferences",
   defaults: {
     windowBounds: { width: 800, height: 600 },
-    speechAdapter: "google-speech-api"
+    speechAdapter: "google-speech-api",
+    parser: "simple-text-parser",
+    executor: "robot-js"
   }
 });
 
@@ -80,8 +82,10 @@ app.on("activate", () => {
 
 // Speech processing function used to inject into the speech api client
 const processSpeech = (data) => {
-  parsers["text"]["parse"](data);
-  executors["robot-js"]["string"](data);
+  const parser = userPreferences.get("parser");
+  const executor = userPreferences.get("executor");
+  parsers[parser]["parse"](data);
+  executors[executor]["string"](data);
 }
 
 // Encapsulating the speech broadcast callback function to start

@@ -10,12 +10,12 @@
 // recieve -> phrase = "proper gold ball"
 // analyses -> phrase.split(' ') -> etc.
 
-import speechParser from './parser/speech-parser'
+import nullParser from './parser/null-parser'
 import simpleTextParser from './parser/simple-text-parser'
 
 const parsers = {
-  speech: speechParser,
-  text: simpleTextParser
+  "no-parser": nullParser,
+  "simple-text-parser" : simpleTextParser
 }
 
 export default parsers

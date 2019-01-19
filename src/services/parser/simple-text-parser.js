@@ -24,6 +24,5 @@ const parse = (data) => {
 
 module.exports = {
   parse: parse,
-  addKey: addKey,
-  addFormat: addFormat
+  addKey: addKey
 }
