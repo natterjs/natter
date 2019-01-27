@@ -1,0 +1,23 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:10.13.0-browsers
+    steps:
+      - checkout
+      - run:
+          name: Installing Linux dependencies'
+          command: sudo apt-get install libxtst-dev libpng++-dev sox
+      - restore_cache: # special step to restore the dependency cache
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Installing node packages
+          command: npm i
+      - save_cache: # special step to save the dependency cache
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: Running the node tests
+          command: npm test
+          no_output_timeout: 45s

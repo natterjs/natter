@@ -14,6 +14,7 @@ import speech from "./services/speech";
 
 // SetUp //
 const isDevMode = process.env.NODE_ENV === "development"
+const isDebugMode = (process.env.DEBUG === "true")
 if (isDevMode) {
   enableLiveReload({ strategy: "react-hmr" });
 }
@@ -43,7 +44,7 @@ const createWindow = async () => {
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
   // Open the DevTools.
-  if (isDevMode) {
+  if (isDebugMode) {
     await installExtension(REACT_DEVELOPER_TOOLS);
     mainWindow.webContents.openDevTools();
   }

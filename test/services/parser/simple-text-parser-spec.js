@@ -2,7 +2,7 @@ import assert from 'assert'
 
 import simpleTextParser from '../../../src/services/parser/simple-text-parser.js'
 
-describe('Testing string parsing', function () {
+describe('Simple Text Parser', function () {
  it('should allow setting rules for keys', function () {
     // Arrange
     simpleTextParser["addKey"]("slap", "enter", "press")
