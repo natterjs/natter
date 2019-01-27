@@ -36,7 +36,9 @@ const createWindow = async () => {
     minWidth: 1025,
     minHeight: 80,
     maxWidth: 1025,
-    maxHeight: 80
+    maxHeight: 80,
+    alwaysOnTop:true,
+    transparent:true
   });
 
   // and load the index.html of the app.
