@@ -24,7 +24,6 @@ let mainWindow;
 const userPreferences = new Store({
   name: "user-preferences",
   defaults: {
-    windowBounds: { width: 800, height: 600 },
     speechAdapter: "google-speech-api",
     parser: "simple-text-parser",
     executor: "robot-js"
@@ -32,12 +31,12 @@ const userPreferences = new Store({
 });
 
 const createWindow = async () => {
-  const {width, height} = userPreferences.get("windowBounds");
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: width,
-    height: height,
-    backgroundColor: "#2e2c29"
+    minWidth: 1025,
+    minHeight: 80,
+    maxWidth: 1025,
+    maxHeight: 80
   });
 
   // and load the index.html of the app.
@@ -48,11 +47,6 @@ const createWindow = async () => {
     await installExtension(REACT_DEVELOPER_TOOLS);
     mainWindow.webContents.openDevTools();
   }
-
-  mainWindow.on("resize", () => {
-    let { width, height } = mainWindow.getBounds();
-    userPreferences.set("windowBounds", { width, height });
-  });
 
   mainWindow.on("closed", () => {
     mainWindow = null;
@@ -85,6 +79,9 @@ app.on("activate", () => {
 const processSpeech = (data) => {
   const parser = userPreferences.get("parser");
   const executor = userPreferences.get("executor");
+
+  mainWindow.webContents.send('file-save', data);
+
   parsers[parser]["parse"](data);
   executors[executor]["string"](data);
 }
@@ -95,7 +92,7 @@ ipcMain.on("toggle-speech", function(event, data) {
   console.log(`Main Recieved ->`);
   console.log(data);
 
-  const speechAdapter = userPreferences.get("speechAdapter");
+  const speechAdapter = userPreferences.get("speechAdapter", "google-speech-api");
   const adapter = speech.adapters[speechAdapter]
   data === "start" ? adapter.start(processSpeech) : adapter.stop();
 });

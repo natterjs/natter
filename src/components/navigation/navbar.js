@@ -6,9 +6,7 @@ import { Button, Menu } from 'semantic-ui-react'
 import SpeechControls from '../speech/speech-controls'
 
 const Navbar = (props) => (
-  <Menu position='right'>
-    <SpeechControls speech={props.speech}/>
-  </Menu>
+  <SpeechControls speech={props.speech}/>
 )
 
 export default Navbar
