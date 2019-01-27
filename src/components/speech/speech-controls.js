@@ -18,14 +18,17 @@ export default class SpeechControls extends React.Component {
     this.state = {
       recording: false,
       adapter: userPreferences.get("speechAdapter"),
-      transcript: "Standby"
+      transcript: "Standby",
+      thinking: false
     }
     // Render the transcript as we speak
     ipcRenderer.on('file-save', (event, data) => {
       let newTranscript = data.text
+      let thinking = data.complete
       if (newTranscript !== this.state.transcript) {
         this.setState({
-          transcript: newTranscript
+          transcript: newTranscript,
+          thinking: !thinking,
         })
       }
     });
@@ -76,8 +79,9 @@ export default class SpeechControls extends React.Component {
     const renderLoading = () => {
       return (
         <Input
-          loading={this.state.recording}
+          loading={this.state.thinking}
           value={this.state.transcript}
+          disabled={!this.state.recording}
           style={{ width:"650px" }}
            />
       )
