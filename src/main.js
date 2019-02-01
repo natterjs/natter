@@ -30,15 +30,13 @@ const userPreferences = new Store({
   }
 });
 
+let toolbarSize = { minWidth: 1025, minHeight: 80, maxWidth: 1025, maxHeight: 80 }
+let grammarSize = { minWidth: 1025, minHeight: 800, maxWidth: 1025, maxHeight: 800 }
+
 const createWindow = async () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    minWidth: 1025,
-    minHeight: 80,
-    maxWidth: 1025,
-    maxHeight: 80,
-    alwaysOnTop:true,
-    transparent:true
+    minWidth: 1025
   });
 
   // and load the index.html of the app.

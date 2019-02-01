@@ -1,6 +1,5 @@
 // Libraries
 import React from 'react'
-import { Button, Menu } from 'semantic-ui-react'
 
 // Components
 import SpeechControls from '../speech/speech-controls'
