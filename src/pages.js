@@ -25,7 +25,7 @@ export default class Pages extends React.Component {
             <Grid.Column width={4}>
               <MenuExampleVertical />
             </Grid.Column>
-            <Grid.Column width={12}>
+            <Grid.Column width={11}>
               <Switch>
                 <Route path="/grammars" exact component={ Grammars } />
                 <Route path="/rules" exact component={ Rules } />

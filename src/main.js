@@ -36,7 +36,8 @@ let grammarSize = { minWidth: 1025, minHeight: 800, maxWidth: 1025, maxHeight: 8
 const createWindow = async () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    minWidth: 960
+    minWidth: 960,
+    minHeight: 80
   });
 
   // and load the index.html of the app.
