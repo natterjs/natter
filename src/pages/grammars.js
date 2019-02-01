@@ -5,7 +5,7 @@ import { Container, Button, Checkbox, Form } from 'semantic-ui-react'
 export default class Grammars extends React.Component {
   render() {
     return(
-      <Container>
+      <Container fluid>
         <Form>
           <Form.Field>
             <label>First Name</label>

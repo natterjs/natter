@@ -83,7 +83,7 @@ export default class SpeechControls extends React.Component {
           value={this.state.transcript}
           disabled={!this.state.recording}
           inverted
-          style={{ width:"650px" }}
+          style={{ minWidth:"600px" }}
            />
       )
     }
