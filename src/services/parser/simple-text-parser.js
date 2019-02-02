@@ -10,16 +10,16 @@ const parser = new Parser();
 // @param key -> A key or set of keys to be pressed
 // @param event -> An event type of press, hold, release
 
-const addKey = (matcher, key, event) => {
+const addKey = (matcher, type, value, modifier = [""]) => {
   parser.addRule(matcher, () => {
-    return {type: "key", value: key, event: event}
+    return {type: type, value: value, modifier: modifier}
   })
 }
 
 // Trigger the parse
 const parse = (data) => {
   let parsedData = parser.toTree(data.text)
-  return parsedData
+  return { actions: parsedData, complete: data.complete }
 }
 
 module.exports = {

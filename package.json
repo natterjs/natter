@@ -11,7 +11,8 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "eslint --cache --color --ext .jsx,.js src",
-    "test": "NODE_ENV=test mocha --recursive --compilers js:@babel/register"
+    "test-services": "NODE_ENV=test mocha 'test/services/**/*.js' --compilers js:@babel/register",
+    "test-integration": "NODE_ENV=test mocha 'test/integration/**/*.js' --compilers js:@babel/register"
   },
   "keywords": [],
   "author": "simon",

@@ -22,7 +22,7 @@ export default class SpeechControls extends React.Component {
       thinking: false
     }
     // Render the transcript as we speak
-    ipcRenderer.on('file-save', (event, data) => {
+    ipcRenderer.on('active-transcription', (event, data) => {
       let newTranscript = data.text
       let thinking = data.complete
       if (newTranscript !== this.state.transcript) {

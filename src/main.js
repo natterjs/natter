@@ -12,27 +12,31 @@ import executors from "./services/executors";
 import parsers from "./services/parsers";
 import speech from "./services/speech";
 
+// Default settings and objects
+import keyboard from "./config/default-grammars/keyboard"
+
 // SetUp //
 const isDevMode = process.env.NODE_ENV === "development"
 const isDebugMode = (process.env.DEBUG === "true")
 if (isDevMode) {
   enableLiveReload({ strategy: "react-hmr" });
 }
-// Keep a global reference of the window object, if you don"t, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-let mainWindow;
+// Create user preferences store. On initial load they will need a keyboard
+// But on the second load their keyboards should be stored.
 const userPreferences = new Store({
   name: "user-preferences",
   defaults: {
     speechAdapter: "google-speech-api",
     parser: "simple-text-parser",
-    executor: "robot-js"
-  }
+    executor: "robot-js",
+    keyboard: keyboard
+  },
 });
 
 let toolbarSize = { minWidth: 1025, minHeight: 80, maxWidth: 1025, maxHeight: 80 }
 let grammarSize = { minWidth: 1025, minHeight: 800, maxWidth: 1025, maxHeight: 800 }
 
+let mainWindow;
 const createWindow = async () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
@@ -81,10 +85,10 @@ const processSpeech = (data) => {
   const parser = userPreferences.get("parser");
   const executor = userPreferences.get("executor");
 
-  mainWindow.webContents.send('file-save', data);
+  mainWindow.webContents.send('active-transcription', data);
 
-  parsers[parser]["parse"](data);
-  executors[executor]["string"](data);
+  var dataTree = parsers[parser]["parse"](data);
+  executors[executor]["tree"](dataTree);
 }
 
 // Encapsulating the speech broadcast callback function to start
