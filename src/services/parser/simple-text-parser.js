@@ -1,7 +1,5 @@
 // Libraries
 import Parser from "simple-text-parser"
-import formatter from "voca"
-
 const parser = new Parser();
 
 // A function for adding keys through a parser
@@ -10,15 +8,15 @@ const parser = new Parser();
 // @param key -> A key or set of keys to be pressed
 // @param event -> An event type of press, hold, release
 
-const addKey = (matcher, type, value, modifier = [""]) => {
+const addKey = (matcher, type, value, modifier, event) => {
   parser.addRule(matcher, () => {
-    return {type: type, value: value, modifier: modifier}
+    return {type: type, value: value, event: event, modifier: modifier}
   })
 }
 
 // Trigger the parse
 const parse = (data) => {
-  let parsedData = parser.toTree(data.text)
+  let parsedData = parser.toTree(data.text.toLowerCase())
   return { actions: parsedData, complete: data.complete }
 }
 

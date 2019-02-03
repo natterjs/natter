@@ -41,7 +41,8 @@ const createWindow = async () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     minWidth: 960,
-    minHeight: 80
+    minHeight: 80,
+    alwaysOnTop: true
   });
 
   // and load the index.html of the app.
@@ -80,14 +81,23 @@ app.on("activate", () => {
   }
 });
 
+
+const parser = userPreferences.get("parser");
+const executor = userPreferences.get("executor");
+const userKeyboard = userPreferences.get("keyboard");
+
+const setupKeyboard = () => {
+  for (let key in keyboard.keys) {
+    parsers[parser]["addKey"](RegExp("\\s{0,1}" + key + "\\s{0,1}"), 'key-tap', keyboard.keys[key])
+  }
+}
+
+setupKeyboard()
+
 // Speech processing function used to inject into the speech api client
 const processSpeech = (data) => {
-  const parser = userPreferences.get("parser");
-  const executor = userPreferences.get("executor");
-
   mainWindow.webContents.send('active-transcription', data);
-
-  var dataTree = parsers[parser]["parse"](data);
+  let dataTree = parsers[parser]["parse"](data);
   executors[executor]["tree"](dataTree);
 }
 

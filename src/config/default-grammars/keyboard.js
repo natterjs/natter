@@ -1,7 +1,6 @@
 export default
 {
-  "letters":
-    {
+  "keys": {
     "alpha": "a",
     "bravo": "b",
     "charlie": "c",
@@ -10,32 +9,57 @@ export default
     "foxtrot": "f",
     "golf": "g",
     "hotel": "h",
-    "India": "i",
-    "Juliet": "j",
+    "india": "i",
+    "juliet": "j",
     "kilo": "k",
-    "Lima": "l",
+    "lima": "l",
     "mike": "m",
     "november": "n",
     "oscar": "o",
     "papa": "p",
-    "qubec": "q",
+    "quebec|cubic": "q",
     "romeo": "r",
     "sierra": "s",
     "tango": "t",
     "uniform": "u",
     "victor": "v",
-    "whiskey": "w",
+    "whiskey|whisky": "w",
     "x-ray": "x",
     "yankee": "y",
-    "zulu": "z"
-    },
-  "special-characters":
-    {
+    "zulu": "z",
+
+    "backspace": "backspace",
+    "delete": "delete",
+    "slap|slab": "enter",
+    "tab": "tab",
+    "space": "space",
+    "escape": "escape",
+
+    "shift": "shift",
+    "control": "control",
+    "alt": "alt",
+
+    "up": "up",
+    "down": "down",
+    "left": "left",
+    "right": "right",
+
+    "home": "home",
+    "end": "end",
+    "page up": "pageup",
+    "page down": "pagedown",
+
+    "audio play": "audio_play",
+    "audio stop": "audio_stop",
+    "audio pause": "audio_pause",
+    "audio next": "audio_next",
+    "audio previous": "audio_prev"
+  },
+  "text": {
     "colon": ":",
     "comma": ",",
     "semicolon": ";",
-    "stop": ".",
-    "space": " ",
+    "full stop": ".",
     "dash": "-",
     "quote": "\"",
     "single quote": "'"

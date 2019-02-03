@@ -1,5 +1,8 @@
-import assert from 'assert'
+// Libraries
+const chai = require("chai");
+const expect = chai.expect;
 
+// Services
 import simpleTextParser from '../../../src/services/parser/simple-text-parser.js'
 // Executing a tree would consist of parsing an array of actions
 //
@@ -15,7 +18,7 @@ describe('Simple Text Parser', function () {
       // Arrange
       let expectation = {
         actions: [
-        { type: 'key-tap', value: 'enter', modifier: [""] }
+        { type: 'key-tap', value: 'enter', event: undefined, modifier: undefined }
         ],
         complete: true
       }
@@ -24,8 +27,9 @@ describe('Simple Text Parser', function () {
       // Act
       simpleTextParser["addKey"]("slap", "key-tap", "enter")
       let parsingTree = simpleTextParser.parse(speech)
+
       // Assert
-      assert.deepEqual(parsingTree, expectation);
+      expect(parsingTree).to.deep.equal(expectation)
     })
 
     it('separates events from text', function () {
@@ -33,7 +37,7 @@ describe('Simple Text Parser', function () {
       let expectation = {
         actions: [
           { type: 'text', text: 'some text ' },
-          { type: 'key-tap', value: 'enter', modifier: [""] },
+          { type: 'key-tap', value: 'enter', event: undefined, modifier: undefined },
           { type: 'text', text: ' something on a new line' }
         ],
         complete: true
@@ -45,7 +49,7 @@ describe('Simple Text Parser', function () {
       let parsingTree = simpleTextParser.parse(speech)
 
       // Assert
-      assert.deepEqual(parsingTree, expectation);
+      expect(parsingTree).to.deep.equal(expectation)
     })
   });
 })

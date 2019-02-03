@@ -86,6 +86,7 @@
     "eslint-plugin-react": "^7.12.3",
     "mocha": "^5.2.0",
     "node-record-lpcm16": "^0.3.1",
+    "sinon": "^7.2.3",
     "spectron": "^5.0.0"
   }
 }
