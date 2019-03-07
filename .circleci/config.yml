@@ -7,7 +7,7 @@ jobs:
       - checkout
       - run:
           name: Installing Linux dependencies'
-          command: sudo apt-get install libxtst-dev libpng++-dev sox
+          command: sudo apt-get update && sudo apt-get install libxtst-dev libpng++-dev sox
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:

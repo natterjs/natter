@@ -17,7 +17,6 @@ export default class SpeechControls extends React.Component {
     super()
     this.state = {
       recording: false,
-      adapter: userPreferences.get("speechAdapter"),
       transcript: "Standby",
       thinking: false
     }
@@ -35,9 +34,6 @@ export default class SpeechControls extends React.Component {
   }
 
   render() {
-    const speech = this.props.speech
-    const adapter = speech.adapters[this.state.adapter]
-
     const toggleSpeech = () => {
       let recording = this.state.recording
       this.setState({
@@ -61,21 +57,6 @@ export default class SpeechControls extends React.Component {
       return broadcasters['client']('toggle-speech', 'stop')
     }
 
-    const selectOptions = (object) => {
-      let options = Object.keys(object).map((adapter) => (
-        { key: adapter, value: adapter, text: adapter }
-      ))
-      return options
-    }
-
-    const selectAdapter = (e) => {
-      let adapter = e.target.textContent
-      this.setState({
-        adapter: adapter
-      })
-      return userPreferences.set("speechAdapter", adapter);
-    }
-
     const renderLoading = () => {
       return (
         <Input
@@ -83,34 +64,23 @@ export default class SpeechControls extends React.Component {
           value={this.state.transcript}
           disabled={!this.state.recording}
           inverted
-          style={{ minWidth:"600px" }}
+          style={{ minWidth:"800px" }}
            />
       )
     }
 
     return (
-      <Menu size="tiny">
+      <Menu>
         <Menu.Item>
           {renderLoading()}
         </Menu.Item>
-        <Menu.Menu position='right'>
           <Menu.Item>
-            <Dropdown
-              placeholder='Select adapter'
-              options={selectOptions(speech.adapters)}
-              defaultValue={this.state.adapter}
-              onChange={selectAdapter}
-              disabled={this.state.recording}
-              />
-          </Menu.Item>
-          <Menu.Item>
-            <Button.Group>
-              <Button positive disabled={this.state.recording} onClick={start}>Start</Button>
-              <Button.Or text='' />
-              <Button negative disabled={!this.state.recording} onClick={stop}>Stop</Button>
-            </Button.Group>
-          </Menu.Item>
-        </Menu.Menu>
+          <Button.Group>
+            <Button positive disabled={this.state.recording} onClick={start}>on</Button>
+            <Button.Or text='' />
+            <Button negative disabled={!this.state.recording} onClick={stop}>off</Button>
+          </Button.Group>
+        </Menu.Item>
       </Menu>
     );
   }

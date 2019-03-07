@@ -1,16 +1,18 @@
 // Libraries
 import React from 'react'
-import { HashRouter } from "react-router-dom"
 
-// Pages
-import Pages from './pages'
+// Components
+import Navbar from './components/navigation/navbar'
+
+// Services
+import speech from './services/speech'
 
 export default class App extends React.Component {
-  render() {
+  render(){
     return (
-      <HashRouter>
-        <Pages />
-      </HashRouter>
-    );
+      <div>
+        <Navbar speech={speech} />
+      </div>
+    )
   }
 }

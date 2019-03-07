@@ -1,7 +1,7 @@
 [![CircleCI](https://circleci.com/gh/simonireilly/natter/tree/master.svg?style=svg)](https://circleci.com/gh/simonireilly/natter/tree/master)
 
 
-## ![Natter Logo](./assets/icons/natter-64.png) Natter
+## ![Natter Logo](./assets/icons/64x64.png) Natter
 _Programmable and extensible voice automation for Linux, MacOS, and Windows_
 
 ![Getting Started](./assets/gifs/getting_started_with_natter.gif)
