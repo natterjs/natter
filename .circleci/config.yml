@@ -21,3 +21,7 @@ jobs:
           name: Running the service tests
           command: npm run test-services
           no_output_timeout: 45s
+      - run:
+          name: Make the the linux distribution
+          command: sudo apt-get install fakeroot && npm run make
+          no_output_timeout: 200s
