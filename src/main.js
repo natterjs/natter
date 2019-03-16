@@ -101,12 +101,16 @@ const processSpeech = (data) => {
 // Encapsulating the speech broadcast callback function to start
 // the currently configured speech adapter
 ipcMain.on("toggle-speech", function(event, data) {
-  console.log(`Main Recieved ->`);
-  console.log(data);
+  console.log(` ${new Date().toLocaleTimeString()} :: MAIN RECIEVED: => `, data)
 
   const speechAdapter = userPreferences.get("speechAdapter");
   const adapter = speech.adapters[speechAdapter]
   data === "start" ? adapter.start(processSpeech) : adapter.stop();
 });
 
-
+// Add a build logger which recieved broadcasts from the renderers
+//
+// This enables us to log events in the DOM without requiring dev-tools
+ipcMain.on("build-log", function(event, data) {
+  console.log(` ${new Date().toLocaleTimeString()} :: BUILD LOG: => `, data)
+});

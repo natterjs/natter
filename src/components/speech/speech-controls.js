@@ -34,6 +34,8 @@ export default class SpeechControls extends React.Component {
   }
 
   render() {
+    broadcasters['client']('build-log', 'Mounting Speech Controls to DOM')
+
     const toggleSpeech = () => {
       let recording = this.state.recording
       this.setState({
