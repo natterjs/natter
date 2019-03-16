@@ -45,6 +45,7 @@ const sendResults = (data, callback) => {
     text: data.results[0].alternatives[0].transcript,
     complete: data.results[0].isFinal
   }
+  console.log("GOOGLE Speech API sending =>", message)
   callback(message)
 }
 
