@@ -5,20 +5,39 @@ const request = require('request')
 // Configuration
 const config = require('../../config/config')
 
-exports.parseResult = function (err, resp, body) {
-  console.error("Broadcasting is not supported for this API")
-  console.log(body)
+// Create a recognize stream
+const recognizeStream = (callBack) => {
+  return (
+    request.post({
+        'url'     : 'https://api.wit.ai/speech?client=chromium&lang=en-us&output=json',
+        'headers' : {
+          'Accept': 'application/vnd.wit.20160202+json',
+          'Authorization': 'Bearer ' + config.witToken,
+          'Content-Type': 'audio/wav'
+        }
+      }, callBack)
+  )
 }
 
-const startRecording = () => {
-  record.start().pipe(request.post({
-    'url'     : 'https://api.wit.ai/speech?client=chromium&lang=en-us&output=json',
-    'headers' : {
-      'Accept'        : 'application/vnd.wit.20160202+json',
-      'Authorization' : 'Bearer ' + config.witToken,
-      'Content-Type'  : 'audio/wav'
+const startRecording = (processSpeech) => {
+
+  const parseResult = function (err, resp, body) {
+    startRecording(processSpeech)
+    let data = JSON.parse(body)
+    let message = {
+      text: data["_text"],
+      complete: true
     }
-  }, exports.parseResult))
+    console.log("Wit AI sending =>", message)
+    processSpeech(message)
+  }
+
+  record.start({
+    verbose: true,
+    recordProgram: 'rec',
+    silence: '0.5',
+    threshold: 5
+  }).pipe(recognizeStream(parseResult))
 }
 
 const stopRecording = () => {
