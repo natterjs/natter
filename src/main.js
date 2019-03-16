@@ -1,11 +1,10 @@
 // Electron
 import { app, BrowserWindow } from "electron";
-import installExtension, { REACT_DEVELOPER_TOOLS } from "electron-devtools-installer";
-import { enableLiveReload } from "electron-compile";
 import { ipcMain } from "electron"
 const path = require('path')
 
 // Libraries
+import { enableLiveReload } from "electron-compile";
 import Store from "electron-store";
 
 // Services
@@ -16,12 +15,6 @@ import speech from "./services/speech";
 // Default settings and objects
 import keyboard from "./config/default-grammars/keyboard"
 
-// SetUp //
-const isDevMode = process.env.NODE_ENV === "development"
-const isDebugMode = (process.env.DEBUG === "true")
-if (isDevMode) {
-  enableLiveReload({ strategy: "react-hmr" });
-}
 // Create user preferences store. On initial load they will need a keyboard
 // But on the second load their keyboards should be stored.
 const userPreferences = new Store({
@@ -53,12 +46,6 @@ const createWindow = async () => {
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`);
-
-  // Open the DevTools.
-  if (isDebugMode) {
-    await installExtension(REACT_DEVELOPER_TOOLS);
-    mainWindow.webContents.openDevTools();
-  }
 
   mainWindow.once('ready-to-show', () => {
     mainWindow.show()
