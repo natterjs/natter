@@ -48,7 +48,7 @@ const createWindow = async () => {
     frame: false,
     x: 30,
     y: 70,
-    icon: path.join(__dirname, 'assets/icons/128x128.png')
+    icon: path.join(__dirname, 'assets/icons/64x64.png')
   });
 
   // and load the index.html of the app.
