@@ -14,7 +14,8 @@ const encoding = 'LINEAR16';
 const sampleRateHertz = 16000;
 const languageCode = 'en-GB';
 
-const customLogger = (message) =>  console.log(` ${new Date().toLocaleTimeString()} :: GOOGLE SPEECH: => `, message)
+//Services
+import customLogger from '../loggers/custom-logger'
 
 const request = {
   config: {
@@ -42,10 +43,10 @@ const recognizeStream = (processSpeech) => {
 const sendResults = (data, callback) => {
   let message = {
     text: data.results[0].alternatives[0].transcript,
-    complete: data.results[0].isFinal
+    complete: data.results[0].isFinal,
   }
   callback(message)
-  customLogger("Producing message: ", message)
+  customLogger(message, 'GOOGLE SPEECH')
 }
 
 // Start recording and send the microphone input to the Speech API
@@ -53,10 +54,9 @@ const startRecording = (processSpeech) => {
   record
   .start({
     sampleRateHertz: sampleRateHertz,
-    threshold: 0,
-    verbose: false,
+    threshold: 5,
     recordProgram: 'rec',
-    silence: '15.0',
+    silence: '1.0',
   })
   .on('error', console.error)
   .pipe(recognizeStream(processSpeech))
@@ -66,13 +66,13 @@ const startRecording = (processSpeech) => {
 const restartRecording = (processSpeech) => {
   record.stop()
   startRecording(processSpeech)
-  customLogger("Recording Restarted")
+  customLogger("Recording Restarted", 'GOOGLE SPEECH')
 }
 
 // Start recording and send the microphone input to the Speech API
 const stopRecording = () => {
   record.stop()
-  customLogger("Recording Stopped")
+  customLogger("Recording Stopped", 'GOOGLE SPEECH')
 }
 
 module.exports.start = startRecording

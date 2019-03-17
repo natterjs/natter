@@ -5,6 +5,7 @@ const { ipcRenderer } = require('electron')
 
 // Services
 import broadcasters from '../../services/broadcasters'
+import customLogger from '../../services/loggers/custom-logger'
 
 export default class SpeechControls extends React.Component {
   constructor() {
@@ -28,7 +29,7 @@ export default class SpeechControls extends React.Component {
   }
 
   render() {
-    broadcasters['client']('build-log', 'Mounting Speech Controls to DOM')
+    customLogger('Mounting Speech Controls to DOM')
 
     const toggleSpeech = () => {
       let recording = this.state.recording

@@ -11,12 +11,14 @@ import Store from 'electron-store';
 import executors from './services/executors';
 import parsers from './services/parsers';
 import speech from './services/speech';
+import customLogger from './services/loggers/custom-logger'
 
 // Default settings and objects
 import keyboard from './config/default-grammars/keyboard'
 
 // Create user preferences store. On initial load they will need a keyboard
 // But on the second load their keyboards should be stored.
+
 const userPreferences = new Store({
   name: 'user-preferences',
   defaults: {
@@ -24,9 +26,7 @@ const userPreferences = new Store({
     parser: 'simple-text-parser',
     executor: 'robot-js',
     keyboard: keyboard,
-    api_keys: {
-      wit: 'LWYUABH7YMDJ6NZRFYMU3EWR4AVKAEB3'
-    }
+    'wit-ai-api': 'LWYUABH7YMDJ6NZRFYMU3EWR4AVKAEB3',
   },
 });
 
@@ -91,10 +91,10 @@ const speechAdapter = 'wit-ai-api' // userPreferences.get('speechAdapter');
 //
 // 1. We assign to the parser matches for each fo the words used for the keys
 const setupKeyboard = () => {
-  for (let key in keyboard.keys) {
+  for (let key in userKeyboard.keys) {
     parsers[parser]['addKey'](
       RegExp("\\s{0,1}" + key + "\\s{0,1}"), 'key-tap',
-      keyboard.keys[key]
+      userKeyboard.keys[key]
       )
   }
 }
@@ -118,14 +118,15 @@ const processSpeech = (data) => {
 // 2. If we recieved start - begin recording, otherwise the command must be stop
 ipcMain.on('toggle-speech', function(event, data) {
   const adapter = speech.adapters[speechAdapter]
-  data === 'start' ? adapter.start(processSpeech, userPreferences) : adapter.stop();
+  const apiKey = userPreferences.get(speechAdapter)
+  data === 'start' ? adapter.start(processSpeech, apiKey) : adapter.stop();
 
-  console.log(` ${new Date().toLocaleTimeString()} :: MAIN RECIEVED: => `, data)
+  customLogger(data, 'TOGGLE SPEECH')
 });
 
 // Add a build logger which recieved broadcasts from the renderers
 //
 // 1. This enables us to log events in the DOM without requiring dev-tools
-ipcMain.on('build-log', function(event, data) {
-  console.log(` ${new Date().toLocaleTimeString()} :: BUILD LOG: => `, data)
+ipcMain.on('log-catcher', function(event, data) {
+  customLogger(data)
 });

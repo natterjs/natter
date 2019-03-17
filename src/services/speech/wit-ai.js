@@ -6,7 +6,8 @@
 import record from 'node-record-lpcm16'
 import request from 'request'
 
-const customLogger = (message) =>  console.log(` ${new Date().toLocaleTimeString()} :: WIT AI SPEECH: => `, message)
+//Services
+import customLogger from '../loggers/custom-logger'
 
 // We relie on sox for audio streaming - this active will break it's loop
 // calls when we toggle it
@@ -21,14 +22,17 @@ const recorder = (processSpeech, apiKey) => {
       complete: true
     }
     if (active) {
+      console.log(message)
+      console.log(body)
       processSpeech(message)
-      customLogger('Producing message...')
-      customLogger(message)
+      customLogger('Producing message...', 'WIT AI SPEECH')
+      customLogger(message, 'WIT AI SPEECH')
     }
   }
 
   record.start({
     recordProgram: 'rec',
+    verbose: true,
     silence: '0.5',
     threshold: 5
   }).pipe(postAudioData(parseResult, apiKey))
@@ -48,23 +52,24 @@ const postAudioData = (callBack, apiKey) => {
   )
 }
 
-const startRecording = (callBack, userPreferences) => {
+const startRecording = (callBack, apiKey) => {
+  customLogger(apiKey, 'API KEY')
   active = true
-  recorder(callBack, userPreferences.get('api_keys.wit'))
-  customLogger('Recording Started')
+  recorder(callBack, apiKey)
+  customLogger('Recording Started', 'WIT AI SPEECH')
 }
 
 const restartRecording = (callBack) => {
   if (active) {
     recorder(callBack)
-    customLogger('Recording Retarted')
+    customLogger('Recording Restarted', 'WIT AI SPEECH')
   }
 }
 
 const stopRecording = () => {
   active = false
   record.stop()
-  customLogger('Recording Stopped')
+  customLogger('Recording Stopped', 'WIT AI SPEECH')
 }
 
 module.exports.start = startRecording
