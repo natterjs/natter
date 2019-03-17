@@ -6,9 +6,6 @@
 const record = require('node-record-lpcm16');
 const googleSpeech = require('@google-cloud/speech');
 
-// Broadcasters
-import broadcasters from '../broadcasters'
-
 // Creates a client
 const client = new googleSpeech.SpeechClient();
 
@@ -16,6 +13,8 @@ const client = new googleSpeech.SpeechClient();
 const encoding = 'LINEAR16';
 const sampleRateHertz = 16000;
 const languageCode = 'en-GB';
+
+const customLogger = (message) =>  console.log(` ${new Date().toLocaleTimeString()} :: GOOGLE SPEECH: => `, message)
 
 const request = {
   config: {
@@ -51,7 +50,6 @@ const sendResults = (data, callback) => {
 
 // Start recording and send the microphone input to the Speech API
 const startRecording = (processSpeech) => {
-  console.log("Starting recording")
   record
   .start({
     sampleRateHertz: sampleRateHertz,
@@ -62,16 +60,19 @@ const startRecording = (processSpeech) => {
   })
   .on('error', console.error)
   .pipe(recognizeStream(processSpeech))
+  customLogger("Recording Started")
 }
 
 const restartRecording = (processSpeech) => {
   record.stop()
   startRecording(processSpeech)
+  customLogger("Recording Restarted")
 }
 
 // Start recording and send the microphone input to the Speech API
 const stopRecording = () => {
   record.stop()
+  customLogger("Recording Stopped")
 }
 
 module.exports.start = startRecording

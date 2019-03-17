@@ -1,14 +1,14 @@
 // Libraries
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {AppContainer} from 'react-hot-loader';
+
+// Services
+import broadcasters from './services/broadcasters'
 
 const render = () => {
+  broadcasters['client']('build-log', 'Mounting react to DOM')
   const App = require('./app').default;
-  ReactDOM.render(<AppContainer><App /></AppContainer>, document.getElementById('App'));
+  ReactDOM.render(<App />, document.getElementById('App'));
 }
 
 render();
-if (module.hot) {
-  module.hot.accept(render);
-}
