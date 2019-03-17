@@ -3,64 +3,68 @@
 // It exports it's required start and stop commands
 
 // Libraries
-const record = require('node-record-lpcm16')
-const request = require('request')
+import record from 'node-record-lpcm16'
+import request from 'request'
 
-// Configuration
-const config = require('../../config/config')
+const customLogger = (message) =>  console.log(` ${new Date().toLocaleTimeString()} :: WIT AI SPEECH: => `, message)
 
 // We relie on sox for audio streaming - this active will break it's loop
 // calls when we toggle it
 let active = false
 
-const recorder = (processSpeech) => {
+const recorder = (processSpeech, apiKey) => {
   const parseResult = function (err, resp, body) {
-    restartRecording(processSpeech)
+    restartRecording(processSpeech, apiKey)
     let data = JSON.parse(body)
     let message = {
-      text: data["_text"],
+      text: data['_text'],
       complete: true
     }
-    console.log("Wit AI sending =>", message)
-    processSpeech(message)
+    if (active) {
+      processSpeech(message)
+      customLogger('Producing message...')
+      customLogger(message)
+    }
   }
 
   record.start({
-    verbose: true,
     recordProgram: 'rec',
     silence: '0.5',
     threshold: 5
-  }).pipe(postAudioData(parseResult))
+  }).pipe(postAudioData(parseResult, apiKey))
 }
 
-const startRecording = (callBack) => {
+// Create a recognize stream
+const postAudioData = (callBack, apiKey) => {
+  return (
+    request.post({
+        'url'     : 'https://api.wit.ai/speech?client=chromium&lang=en-us&output=json',
+        'headers' : {
+          'Accept': 'application/vnd.wit.20160202+json',
+          'Authorization': 'Bearer ' + apiKey,
+          'Content-Type': 'audio/wav'
+        }
+      }, callBack)
+  )
+}
+
+const startRecording = (callBack, userPreferences) => {
   active = true
-  recorder(callBack)
+  recorder(callBack, userPreferences.get('api_keys.wit'))
+  customLogger('Recording Started')
 }
 
 const restartRecording = (callBack) => {
   if (active) {
     recorder(callBack)
+    customLogger('Recording Retarted')
   }
 }
 
 const stopRecording = () => {
   active = false
   record.stop()
-}
-
-// Create a recognize stream
-const postAudioData = (callBack) => {
-  return (
-    request.post({
-        'url'     : 'https://api.wit.ai/speech?client=chromium&lang=en-us&output=json',
-        'headers' : {
-          'Accept': 'application/vnd.wit.20160202+json',
-          'Authorization': 'Bearer ' + config.witToken,
-          'Content-Type': 'audio/wav'
-        }
-      }, callBack)
-  )
+  customLogger('Recording Stopped')
 }
 
 module.exports.start = startRecording

@@ -4,7 +4,7 @@ const expect = chai.expect;
 const sinon = require("sinon")
 
 // Services
-import robotJSExecutor from '../../../src/services/speech/wit-ai.js'
+import witAiSpeechAdapter from '../../../src/services/speech/wit-ai.js'
 
 describe('WIT AI Speech API', function () {
   describe('.start', function () {

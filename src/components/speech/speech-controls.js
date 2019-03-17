@@ -1,16 +1,10 @@
 // Libraries
 import React from 'react';
 import { Button, Dropdown, Menu, Input } from 'semantic-ui-react';
-import Store from "electron-store";
 const { ipcRenderer } = require('electron')
 
 // Services
 import broadcasters from '../../services/broadcasters'
-
-// Data
-const userPreferences = new Store({
-  name: "user-preferences"
-});
 
 export default class SpeechControls extends React.Component {
   constructor() {

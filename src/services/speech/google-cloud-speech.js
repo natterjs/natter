@@ -44,8 +44,8 @@ const sendResults = (data, callback) => {
     text: data.results[0].alternatives[0].transcript,
     complete: data.results[0].isFinal
   }
-  console.log("GOOGLE Speech API sending =>", message)
   callback(message)
+  customLogger("Producing message: ", message)
 }
 
 // Start recording and send the microphone input to the Speech API
