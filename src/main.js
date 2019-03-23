@@ -24,7 +24,8 @@ let mainWindow;
 const createMainWindow = async () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    minWidth: 980,
+    minWidth: 1020,
+    maxWidth: 1020,
     minHeight: 60,
     maxHeight: 60,
     title: 'Natter',

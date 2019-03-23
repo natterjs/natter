@@ -82,6 +82,11 @@ export default class SpeechControls extends React.Component {
             <Button negative disabled={!this.state.recording} onClick={stop}>off</Button>
           </Button.Group>
         </Menu.Item>
+        <Menu.Item id='draggable-handle'>
+          <span>...</span><br/>
+          <span>...</span><br/>
+          <span>...</span>
+        </Menu.Item>
       </Menu>
     );
   }
