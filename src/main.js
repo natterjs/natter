@@ -16,31 +16,16 @@ import customLogger from './services/loggers/custom-logger'
 // Default settings and objects
 import keyboard from './config/default-grammars/keyboard'
 
-// Create user preferences store. On initial load they will need a keyboard
-// But on the second load their keyboards should be stored.
-
-const userPreferences = new Store({
-  name: 'user-preferences',
-  defaults: {
-    speechAdapter: 'wit-ai-api',
-    parser: 'simple-text-parser',
-    executor: 'robot-js',
-    keyboard: keyboard,
-    'wit-ai-api': 'LWYUABH7YMDJ6NZRFYMU3EWR4AVKAEB3',
-  },
-});
-
-
 let mainWindow;
-const createWindow = async () => {
+
+const createMainWindow = async () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     minWidth: 980,
     minHeight: 60,
     maxHeight: 60,
-    show: false,
     title: 'Natter',
-    transparent: true,
+    show: false,
     frame: false,
     x: 30,
     y: 70,
@@ -48,21 +33,51 @@ const createWindow = async () => {
   });
 
   // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/index.html`);
-
+  mainWindow.loadURL(`file://${__dirname}/windows/app.html`);
+  // and when it's ready to show reveal it
   mainWindow.once('ready-to-show', () => {
     mainWindow.show()
   })
-
+  // and ensure it cannot be hidden when closed
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
 };
 
+let settingsWindow = null;
+
+const openSettingsWindow = async () => {
+  if (settingsWindow === null){
+    // Create the browser window.
+    settingsWindow = new BrowserWindow({
+      title: 'Natter - Settings',
+      show: false,
+      icon: path.join(__dirname, 'assets/icons/64x64.png')
+    });
+    // and load the index.html of the app.
+    settingsWindow.loadURL(`file://${__dirname}/windows/settings.html`);
+    // and when it's ready to show reveal it
+    settingsWindow.once('ready-to-show', () => {
+      settingsWindow.show()
+    })
+  } else {
+    settingsWindow.show()
+  }
+  // and ensure it cannot be hidden when closed
+  settingsWindow.on('closed', () => {
+    settingsWindow = null;
+  });
+}
+
+// Allow the renderer thread to call for a new window to be opened
+ipcMain.on('open-settings-window', function(event, data) {
+  openSettingsWindow()
+});
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on('ready', createMainWindow);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -77,8 +92,24 @@ app.on('activate', () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
-    createWindow();
+    createMainWindow();
   }
+});
+
+// Business logic //
+
+// Create user preferences store. On initial load they will need a keyboard
+// But on the second load their keyboards should be stored.
+
+const userPreferences = new Store({
+  name: 'user-preferences',
+  defaults: {
+    speechAdapter: 'wit-ai-api',
+    parser: 'simple-text-parser',
+    executor: 'robot-js',
+    keyboard: keyboard,
+    'wit-ai-api': 'LWYUABH7YMDJ6NZRFYMU3EWR4AVKAEB3',
+  },
 });
 
 // Require the users preferred adapters from the store
@@ -98,6 +129,7 @@ const setupKeyboard = () => {
       )
   }
 }
+
 setupKeyboard()
 
 // Speech processing function used to inject into the speech api client
