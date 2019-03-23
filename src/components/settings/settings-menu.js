@@ -27,6 +27,7 @@ export default class SettingsMenu extends Component {
             name='Configuration'
             active={activeItem === 'Configuration'}
             onClick={this.handleItemClick}
+            id='configuration'
           >
             Configuration
           </Menu.Item>
@@ -36,13 +37,19 @@ export default class SettingsMenu extends Component {
             name='Grammars'
             active={activeItem === 'Grammars'}
             onClick={this.handleItemClick}
+            id='grammars'
           >
           Grammars
         </Menu.Item>
         </Link>
 
         <Link to="/keyboard">
-          <Menu.Item name='Keyboard' active={activeItem === 'Keyboard'} onClick={this.handleItemClick}>
+          <Menu.Item
+            name='Keyboard'
+            active={activeItem === 'Keyboard'}
+            onClick={this.handleItemClick}
+            id='keyboard'
+            >
             Keyboard
           </Menu.Item>
         </Link>
