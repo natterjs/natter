@@ -16,7 +16,6 @@ export default class Settings extends React.Component {
     <Router>
       <div>
       <SettingsMenu />
-        <hr />
         <Switch>
           <Route exact path="/" component={Configuration} />
           <Route path="/grammars" component={Grammars} />
