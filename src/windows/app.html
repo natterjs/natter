@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="stylesheet" type="text/css" href="../assets/css/semantic.min.css">
+</head>
+<body style="overflow: hidden; background-color: rgba(0,0,0,0.5); margin: 0" >
+  <div id="App"></div>
+</body>
+
+<script>
+  // Libraries
+  import React from 'react';
+  import ReactDOM from 'react-dom';
+
+  // Services
+  import customLogger from '../services/loggers/custom-logger'
+
+  const render = () => {
+    const App = require('../pages/app').default;
+    ReactDOM.render(<App />, document.getElementById('App'));
+    customLogger('Mounting React - App')
+  }
+
+  render();
+</script>
+</html>
