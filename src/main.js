@@ -16,6 +16,9 @@ import customLogger from './services/loggers/custom-logger'
 // Default settings and objects
 import keyboard from './config/default-grammars/keyboard'
 
+// Load assets
+const assetsDirectory = path.join(__dirname, "assets");
+
 let mainWindow;
 
 const createMainWindow = async () => {
@@ -37,6 +40,9 @@ const createMainWindow = async () => {
   // and when it's ready to show reveal it
   mainWindow.once('ready-to-show', () => {
     mainWindow.show()
+    if (process.env.NODE_ENV === 'development') {
+      mainWindow.webContents.openDevTools({ mode: 'detach'})
+    }
   })
   // and ensure it cannot be hidden when closed
   mainWindow.on('closed', () => {
@@ -59,9 +65,12 @@ const openSettingsWindow = async () => {
     // and when it's ready to show reveal it
     settingsWindow.once('ready-to-show', () => {
       settingsWindow.show()
+      if (process.env.NODE_ENV === 'development') {
+        settingsWindow.webContents.openDevTools({ mode: 'detach'})
+      }
     })
   } else {
-    settingsWindow.show()
+    settingsWindow.focus()
   }
   // and ensure it cannot be hidden when closed
   settingsWindow.on('closed', () => {

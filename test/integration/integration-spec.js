@@ -28,7 +28,7 @@ describe("Example integrations spec", function () {
     // When running locally it is 2
     it('opens application window', function () {
       return app.client.waitUntilWindowLoaded().getWindowCount()
-      .should.eventually.below(3);
+      .should.eventually.above(1);
     });
   });
 });

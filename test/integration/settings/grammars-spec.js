@@ -1,13 +1,13 @@
-const testhelper = require('../support/spectron-helper');
+const testhelper = require("../../support/spectron-helper");
 const app = testhelper.initialiseSpectron();
 const assert = require('assert')
 
-const chaiAsPromised = require('chai-as-promised');
-const chai = require('chai');
+const chaiAsPromised = require("chai-as-promised");
+const chai = require("chai");
 chai.should();
 chai.use(chaiAsPromised);
 
-describe('Settings page', function () {
+describe("Settings - Grammars", function () {
   this.timeout(30000)
 
   // Start spectron
@@ -23,11 +23,10 @@ describe('Settings page', function () {
     }
   });
 
-  describe('window', function () {
-    // click on link in sidebar
-    it('window will open when clicking on the settings button', function () {
+  describe("page", function () {
+    it("has default content", function () {
       app.client.element('#open-settings').click()
-      return app.client.getTitle().should.eventually.equal('Natter - Settings')
+      return app.client.windowByIndex(1).getText('#grammars').should.eventually.equal("Grammars")
     });
   });
 });
