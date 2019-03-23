@@ -2,13 +2,10 @@
   -webkit-user-select: none;
   -webkit-app-region: drag;
   display: block;
-  padding: 2px 2px;
-  color: grey;
-  text-shadow: 1px 2px 2px darkgrey;
+  padding: 0px 5px;
+  margin-top: -6px;
+  color: white;
+  text-shadow: 1px 1px 2px black;
   font-size: 40px;
-  line-height: 10px;
-}
-
-#draggable-handle::hover {
-  cursor: pointer;
+  line-height: 15px;
 }

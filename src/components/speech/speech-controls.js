@@ -83,9 +83,9 @@ export default class SpeechControls extends React.Component {
           </Button.Group>
         </Menu.Item>
         <Menu.Item id='draggable-handle'>
-          <span>...</span><br/>
-          <span>...</span><br/>
-          <span>...</span>
+          <span>..</span><br/>
+          <span>..</span><br/>
+          <span>..</span>
         </Menu.Item>
       </Menu>
     );
