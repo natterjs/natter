@@ -1,9 +1,11 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0f9b33a6c79d425eb8fb7a9e1eddc89e)](https://app.codacy.com/app/natterjs/natter?utm_source=github.com&utm_medium=referral&utm_content=natterjs/natter&utm_campaign=Badge_Grade_Dashboard)
-[![CircleCI](https://circleci.com/gh/simonireilly/natter/tree/master.svg?style=svg)](https://circleci.com/gh/simonireilly/natter/tree/master)
+MASTER: [![CircleCI](https://circleci.com/gh/natterjs/natter/tree/master.svg?style=svg)](https://circleci.com/gh/natterjs/natter/tree/master)
+DEVELOP: [![CircleCI](https://circleci.com/gh/natterjs/natter/tree/develop.svg?style=svg)](https://circleci.com/gh/natterjs/natter/tree/develop)
 
-Linux Build: [![Build Status](https://dev.azure.com/natterjs/natterjs/_apis/build/status/Electron%20Building%20Linux,%20Mac,%20&%20Windows?branchName=develop&jobName=Job&configuration=linux)](https://dev.azure.com/natterjs/natterjs/_build/latest?definitionId=1&branchName=develop)
-Windows Build: [![Build Status](https://dev.azure.com/natterjs/natterjs/_apis/build/status/Electron%20Building%20Linux,%20Mac,%20&%20Windows?branchName=develop&jobName=Job&configuration=windows)](https://dev.azure.com/natterjs/natterjs/_build/latest?definitionId=1&branchName=develop)
-MacOS Build: [![Build Status](https://dev.azure.com/natterjs/natterjs/_apis/build/status/Electron%20Building%20Linux,%20Mac,%20&%20Windows?branchName=develop&jobName=Job&configuration=mac)](https://dev.azure.com/natterjs/natterjs/_build/latest?definitionId=1&branchName=develop)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0f9b33a6c79d425eb8fb7a9e1eddc89e)](https://app.codacy.com/app/natterjs/natter?utm_source=github.com&utm_medium=referral&utm_content=natterjs/natter&utm_campaign=Badge_Grade_Dashboard)
+
+Linux: [![Build Status](https://dev.azure.com/natterjs/natterjs/_apis/build/status/Electron%20Building%20Linux,%20Mac,%20&%20Windows?branchName=develop&jobName=Job&configuration=linux)](https://dev.azure.com/natterjs/natterjs/_build/latest?definitionId=1&branchName=develop)
+Windows: [![Build Status](https://dev.azure.com/natterjs/natterjs/_apis/build/status/Electron%20Building%20Linux,%20Mac,%20&%20Windows?branchName=develop&jobName=Job&configuration=windows)](https://dev.azure.com/natterjs/natterjs/_build/latest?definitionId=1&branchName=develop)
+MacOS: [![Build Status](https://dev.azure.com/natterjs/natterjs/_apis/build/status/Electron%20Building%20Linux,%20Mac,%20&%20Windows?branchName=develop&jobName=Job&configuration=mac)](https://dev.azure.com/natterjs/natterjs/_build/latest?definitionId=1&branchName=develop)
 
 
 ## ![Natter Logo](./src/assets/icons/64x64.png) Natter
@@ -21,7 +23,7 @@ Natter is about making voice automation of a computer system independent of that
 Use natter to turn speech into text with a number of Web Speech API's:
 - [x] Google
 - [ ] IBM Watson
-- [ ] Wit.ai
+- [x] Wit.ai
 - [ ] Mozilla Deep Speech
 
 ### Automation Intents

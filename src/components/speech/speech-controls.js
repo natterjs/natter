@@ -1,16 +1,11 @@
 // Libraries
 import React from 'react';
 import { Button, Dropdown, Menu, Input } from 'semantic-ui-react';
-import Store from "electron-store";
 const { ipcRenderer } = require('electron')
 
 // Services
 import broadcasters from '../../services/broadcasters'
-
-// Data
-const userPreferences = new Store({
-  name: "user-preferences"
-});
+import customLogger from '../../services/loggers/custom-logger'
 
 export default class SpeechControls extends React.Component {
   constructor() {
@@ -34,7 +29,7 @@ export default class SpeechControls extends React.Component {
   }
 
   render() {
-    broadcasters['client']('build-log', 'Mounting Speech Controls to DOM')
+    customLogger('Mounting Speech Controls to DOM')
 
     const toggleSpeech = () => {
       let recording = this.state.recording
