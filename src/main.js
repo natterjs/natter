@@ -160,7 +160,7 @@ const processSpeech = (data) => {
 // 2. If we recieved start - begin recording, otherwise the command must be stop
 ipcMain.on('toggle-speech', function(event, data) {
   const adapter = speech.adapters[speechAdapter]
-  const apiKey = userPreferences.get(speechAdapter)
+  const apiKey = userPreferences.get(speechAdapter)['apiKey']
   data === 'start' ? adapter.start(processSpeech, apiKey) : adapter.stop();
 
   customLogger(data, 'TOGGLE SPEECH')
