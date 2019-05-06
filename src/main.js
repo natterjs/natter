@@ -34,12 +34,12 @@ const createMainWindow = async () => {
   });
 
   // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/windows/app.html`);
+  mainWindow.loadURL(`file://${__dirname}/windows/app.html`)
   // and when it's ready to show reveal it
   mainWindow.once('ready-to-show', () => {
     mainWindow.show()
     if (process.env.NODE_ENV === 'development') {
-      mainWindow.webContents.openDevTools({ mode: 'detach'})
+      mainWindow.webContents.openDevTools({ mode: 'detach' })
     }
   })
   // and ensure it cannot be hidden when closed
@@ -48,10 +48,10 @@ const createMainWindow = async () => {
   });
 };
 
-let settingsWindow = null;
+let settingsWindow = null
 
 const openSettingsWindow = async () => {
-  if (settingsWindow === null){
+  if (settingsWindow === null) {
     // Create the browser window.
     settingsWindow = new BrowserWindow({
       title: 'Natter - Settings',
@@ -59,12 +59,12 @@ const openSettingsWindow = async () => {
       icon: path.join(__dirname, 'assets/icons/64x64.png')
     });
     // and load the index.html of the app.
-    settingsWindow.loadURL(`file://${__dirname}/windows/settings.html`);
+    settingsWindow.loadURL(`file://${__dirname}/windows/settings.html`)
     // and when it's ready to show reveal it
     settingsWindow.once('ready-to-show', () => {
       settingsWindow.show()
       if (process.env.NODE_ENV === 'development') {
-        settingsWindow.webContents.openDevTools({ mode: 'detach'})
+        settingsWindow.webContents.openDevTools({ mode: 'detach' })
       }
     })
   } else {
@@ -72,7 +72,7 @@ const openSettingsWindow = async () => {
   }
   // and ensure it cannot be hidden when closed
   settingsWindow.on('closed', () => {
-    settingsWindow = null;
+    settingsWindow = null
   });
 }
 
@@ -84,7 +84,7 @@ ipcMain.on('open-settings-window', function(event, data) {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createMainWindow);
+app.on('ready', createMainWindow)
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -99,7 +99,7 @@ app.on('activate', () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
-    createMainWindow();
+    createMainWindow()
   }
 });
 
@@ -115,15 +115,15 @@ const userPreferences = new Store({
     parser: 'simple-text-parser',
     executor: 'robot-js',
     keyboard: keyboard,
-    'wit-ai-api': 'LWYUABH7YMDJ6NZRFYMU3EWR4AVKAEB3',
-  },
+    'wit-ai-api': 'LWYUABH7YMDJ6NZRFYMU3EWR4AVKAEB3'
+  }
 });
 
 // Require the users preferred adapters from the store
-const parser = userPreferences.get('parser');
-const executor = userPreferences.get('executor');
-const userKeyboard = userPreferences.get('keyboard');
-const speechAdapter = userPreferences.get('speechAdapter');
+const parser = userPreferences.get('parser')
+const executor = userPreferences.get('executor')
+const userKeyboard = userPreferences.get('keyboard')
+const speechAdapter = userPreferences.get('speechAdapter')
 
 // Load the keyboard from the user preferences
 //
@@ -157,7 +157,7 @@ const processSpeech = (data) => {
 // 2. If we recieved start - begin recording, otherwise the command must be stop
 ipcMain.on('toggle-speech', function(event, data) {
   const adapter = speech.adapters[speechAdapter]
-  const apiKey = userPreferences.get(speechAdapter)['apiKey']
+  const { apiKey } = userPreferences.get(speechAdapter)
   data === 'start' ? adapter.start(processSpeech, apiKey) : adapter.stop();
 
   customLogger(data, 'TOGGLE SPEECH')
