@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Menu } from 'semantic-ui-react';
-import { Link} from "react-router-dom";
+import React, { Component } from 'react'
+import { Menu } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
-// Assets
-import path from 'path';
+// Libraries
+import path from 'path'
 
 export default class SettingsMenu extends Component {
   constructor(props) {
@@ -11,14 +11,14 @@ export default class SettingsMenu extends Component {
     this.state = {}
   }
 
-  render() {
+  render () {
     const { activeItem } = this.state
     const handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
     return (
       <Menu stackable>
         <Menu.Item>
-          <img src={`file:\/\/${path.resolve(".")}/src/assets/icons/64x64.png`} />
+          <img src={`file:\/\/${path.resolve('.')}/src/assets/icons/64x64.png`} />
         </Menu.Item>
         <Link to="/">
           <Menu.Item
@@ -37,8 +37,8 @@ export default class SettingsMenu extends Component {
             onClick={this.handleItemClick}
             id='grammars'
           >
-          Grammars
-        </Menu.Item>
+            Grammars
+          </Menu.Item>
         </Link>
 
         <Link to="/keyboard">
