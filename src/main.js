@@ -16,9 +16,6 @@ import customLogger from './services/loggers/custom-logger'
 // Default settings and objects
 import keyboard from './config/default-grammars/keyboard'
 
-// Load assets
-const assetsDirectory = path.join(__dirname, "assets");
-
 let mainWindow;
 
 const createMainWindow = async () => {
@@ -134,7 +131,7 @@ const speechAdapter = userPreferences.get('speechAdapter');
 const setupKeyboard = () => {
   for (let key in userKeyboard.keys) {
     parsers[parser]['addKey'](
-      RegExp("\\s{0,1}" + key + "\\s{0,1}"), 'key-tap',
+      RegExp('\\s{0,1}' + key + '\\s{0,1}'), 'key-tap',
       userKeyboard.keys[key]
       )
   }
