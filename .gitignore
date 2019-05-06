@@ -5,3 +5,4 @@ npm-debug.log
 settings.json
 .runtime.config
 package-lock.json
+config/credentials

@@ -126,7 +126,7 @@ const userPreferences = new Store({
 const parser = userPreferences.get('parser');
 const executor = userPreferences.get('executor');
 const userKeyboard = userPreferences.get('keyboard');
-const speechAdapter = 'wit-ai-api' // userPreferences.get('speechAdapter');
+const speechAdapter = userPreferences.get('speechAdapter');
 
 // Load the keyboard from the user preferences
 //
