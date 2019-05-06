@@ -1,10 +1,46 @@
 {
-  "extends": "eslint-config-airbnb",
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module",
+    "allowImportExportEverywhere": false,
+    "codeFrame": true
+  },
+  "env": {
+    "jest": true
+  },
+  "globals": {
+    "shallow": true,
+    "render": true,
+    "mount": true,
+    "page": true,
+    "browser": true,
+    "context": true,
+    "jestPuppeteer": true
+  },
+  "plugins": ["react"],
+  "extends": "standard",
   "rules": {
-    "import/extensions": 0,
-    "import/no-extraneous-dependencies": 0,
-    "import/no-unresolved": [2, { "ignore": ["electron"] }],
-    "linebreak-style": 0,
-    "react/prefer-stateless-function": 0
+    "camelcase": [
+      "error", {
+        "properties": "never",
+        "ignoreDestructuring": true
+    }],
+    "react/jsx-curly-spacing": ["error", {
+      "when": "always",
+      "attributes": false,
+      "children": {
+        "when": "always"
+      }
+    }],
+    "object-curly-spacing": ["error", "always"],
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "padded-blocks": ["error",
+      {
+        "blocks": "never",
+        "classes": "never",
+        "switches": "never"
+      }
+    ]
   }
 }

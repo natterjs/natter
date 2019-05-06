@@ -1,6 +1,6 @@
 // Libraries
-import React from 'react';
-import { Button, Menu, Input } from 'semantic-ui-react';
+import React from 'react'
+import { Button, Menu, Input } from 'semantic-ui-react'
 const { ipcRenderer } = require('electron')
 
 // Services
