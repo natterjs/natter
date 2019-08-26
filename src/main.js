@@ -1,22 +1,21 @@
 // Electron
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow } from 'electron'
 import { ipcMain } from 'electron'
 const path = require('path')
 
 // Libraries
-import { enableLiveReload } from 'electron-compile';
-import Store from 'electron-store';
+import Store from 'electron-store'
 
 // Services
-import executors from './services/executors';
-import parsers from './services/parsers';
-import speech from './services/speech';
+import executors from './services/executors'
+import parsers from './services/parsers'
+import speech from './services/speech'
 import customLogger from './services/loggers/custom-logger'
 
 // Default settings and objects
 import keyboard from './config/default-grammars/keyboard'
 
-let mainWindow;
+let mainWindow
 
 const createMainWindow = async () => {
   // Create the browser window.
@@ -31,7 +30,7 @@ const createMainWindow = async () => {
     x: 30,
     y: 70,
     icon: path.join(__dirname, 'assets/icons/64x64.png')
-  });
+  })
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/windows/app.html`)
@@ -44,9 +43,9 @@ const createMainWindow = async () => {
   })
   // and ensure it cannot be hidden when closed
   mainWindow.on('closed', () => {
-    mainWindow = null;
-  });
-};
+    mainWindow = null
+  })
+}
 
 let settingsWindow = null
 
@@ -57,7 +56,7 @@ const openSettingsWindow = async () => {
       title: 'Natter - Settings',
       show: false,
       icon: path.join(__dirname, 'assets/icons/64x64.png')
-    });
+    })
     // and load the index.html of the app.
     settingsWindow.loadURL(`file://${__dirname}/windows/settings.html`)
     // and when it's ready to show reveal it
@@ -73,13 +72,13 @@ const openSettingsWindow = async () => {
   // and ensure it cannot be hidden when closed
   settingsWindow.on('closed', () => {
     settingsWindow = null
-  });
+  })
 }
 
 // Allow the renderer thread to call for a new window to be opened
 ipcMain.on('open-settings-window', function(event, data) {
   openSettingsWindow()
-});
+})
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -91,9 +90,9 @@ app.on('window-all-closed', () => {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
-    app.quit();
+    app.quit()
   }
-});
+})
 
 app.on('activate', () => {
   // On OS X it's common to re-create a window in the app when the
@@ -101,7 +100,7 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createMainWindow()
   }
-});
+})
 
 // Business logic //
 
@@ -117,7 +116,7 @@ const userPreferences = new Store({
     keyboard: keyboard,
     'wit-ai-api': 'LWYUABH7YMDJ6NZRFYMU3EWR4AVKAEB3'
   }
-});
+})
 
 // Require the users preferred adapters from the store
 const parser = userPreferences.get('parser')
@@ -145,27 +144,27 @@ setupKeyboard()
 // 2. Parse the data by the selected parsing adapter
 // 3. Execute the commands using the chosen executor
 const processSpeech = (data) => {
-  mainWindow.webContents.send('active-transcription', data);
-  let dataTree = parsers[parser]['parse'](data);
-  executors[executor]['tree'](dataTree);
+  mainWindow.webContents.send('active-transcription', data)
+  let dataTree = parsers[parser]['parse'](data)
+  executors[executor]['tree'](dataTree)
 }
 
 // Encapsulating the speech broadcast callback function to start
 // the currently configured speech adapter
 //
 // 1. Load the adapter using the user-preference
-// 2. If we recieved start - begin recording, otherwise the command must be stop
+// 2. If we received start - begin recording, otherwise the command must be stop
 ipcMain.on('toggle-speech', function(event, data) {
   const adapter = speech.adapters[speechAdapter]
   const { apiKey } = userPreferences.get(speechAdapter)
-  data === 'start' ? adapter.start(processSpeech, apiKey) : adapter.stop();
+  data === 'start' ? adapter.start(processSpeech, apiKey) : adapter.stop()
 
   customLogger(data, 'TOGGLE SPEECH')
-});
+})
 
-// Add a build logger which recieved broadcasts from the renderers
+// Add a build logger which received broadcasts from the renderers
 //
 // 1. This enables us to log events in the DOM without requiring dev-tools
 ipcMain.on('log-catcher', function(event, data) {
   customLogger(data)
-});
+})
