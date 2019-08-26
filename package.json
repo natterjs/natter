@@ -11,52 +11,22 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "eslint --cache --color --ext .jsx,.js src",
+    "test": "test-services && test-integration",
     "test-services": "NODE_ENV=test mocha 'test/services/**/*.js' --compilers js:@babel/register",
     "test-integration": "NODE_ENV=test mocha 'test/integration/**/*.js' --compilers js:@babel/register"
   },
   "keywords": [],
   "author": "simon",
   "license": "MIT",
-  "config": {
-    "forge": {
-      "make_targets": {
-        "win32": [
-          "squirrel"
-        ],
-        "darwin": [
-          "zip"
-        ],
-        "linux": [
-          "deb"
-        ]
-      },
-      "electronPackagerConfig": {
-        "packageManager": "npm"
-      },
-      "electronWinstallerConfig": {
-        "name": "natter"
-      },
-      "electronInstallerDebian": {},
-      "electronInstallerRedhat": {},
-      "github_repository": {
-        "owner": "simonireilly",
-        "name": "natter"
-      },
-      "windowsStoreConfig": {
-        "packageName": "",
-        "name": "natter"
-      }
-    }
-  },
   "dependencies": {
-    "@google-cloud/speech": "^2.1.1",
+    "@google-cloud/speech": "^3.2.5",
     "electron-compile": "^6.4.4",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^2.0.0",
-    "grpc": "^1.17.0",
     "node-record-lpcm16": "^0.3.1",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
+    "react-router-dom": "^5.0.0",
     "request": "^2.88.0",
     "robotjs": "^0.5.1",
     "semantic-ui-react": "^0.84.0",
@@ -87,5 +57,36 @@
     "rewire": "^4.0.1",
     "sinon": "^7.2.3",
     "spectron": "^5.0.0"
+  },
+  "config": {
+    "forge": {
+      "make_targets": {
+        "win32": [
+          "squirrel"
+        ],
+        "darwin": [
+          "zip"
+        ],
+        "linux": [
+          "deb"
+        ]
+      },
+      "electronPackagerConfig": {
+        "packageManager": "npm"
+      },
+      "electronWinstallerConfig": {
+        "name": "natter"
+      },
+      "electronInstallerDebian": {},
+      "electronInstallerRedhat": {},
+      "github_repository": {
+        "owner": "simonireilly",
+        "name": "natter"
+      },
+      "windowsStoreConfig": {
+        "packageName": "",
+        "name": "natter"
+      }
+    }
   }
 }

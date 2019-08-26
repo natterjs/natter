@@ -54,9 +54,9 @@ const startRecording = (processSpeech) => {
   record
   .start({
     sampleRateHertz: sampleRateHertz,
-    threshold: 5,
+    threshold: 0,
     recordProgram: 'rec',
-    silence: '1.0',
+    silence: '15.0',
   })
   .on('error', console.error)
   .pipe(recognizeStream(processSpeech))

@@ -1,6 +1,6 @@
 // Libraries
-import React from 'react';
-import { Button, Dropdown, Menu, Input } from 'semantic-ui-react';
+import React from 'react'
+import { Button, Menu, Input } from 'semantic-ui-react'
 const { ipcRenderer } = require('electron')
 
 // Services
@@ -54,6 +54,10 @@ export default class SpeechControls extends React.Component {
       return broadcasters['client']('toggle-speech', 'stop')
     }
 
+    const openSettings = () => {
+      return broadcasters['client']('open-settings-window', '')
+    }
+
     const renderLoading = () => {
       return (
         <Input
@@ -74,9 +78,14 @@ export default class SpeechControls extends React.Component {
           <Menu.Item>
           <Button.Group>
             <Button positive disabled={this.state.recording} onClick={start}>on</Button>
-            <Button.Or text='' />
+            <Button.Or text='S' onClick={openSettings} id='open-settings' />
             <Button negative disabled={!this.state.recording} onClick={stop}>off</Button>
           </Button.Group>
+        </Menu.Item>
+        <Menu.Item id='draggable-handle'>
+          <span>..</span><br/>
+          <span>..</span><br/>
+          <span>..</span>
         </Menu.Item>
       </Menu>
     );

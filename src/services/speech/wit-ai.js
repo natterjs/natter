@@ -59,9 +59,9 @@ const startRecording = (callBack, apiKey) => {
   customLogger('Recording Started', 'WIT AI SPEECH')
 }
 
-const restartRecording = (callBack) => {
+const restartRecording = (callBack, apiKey) => {
   if (active) {
-    recorder(callBack)
+    recorder(callBack, apiKey)
     customLogger('Recording Restarted', 'WIT AI SPEECH')
   }
 }
