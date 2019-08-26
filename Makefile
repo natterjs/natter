@@ -16,7 +16,7 @@ init:
 start:
 	GOOGLE_APPLICATION_CREDENTIALS=$(CREDENTIALS) yarn demo
 
-test: ## Run all tests
+run-test: ## Run all tests
 	yarn test
 
 build:

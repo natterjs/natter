@@ -1,13 +1,12 @@
 // Libraries
-const chai = require("chai");
-const sinon = require("sinon")
-const rewire = require("rewire");
+const chai = require("chai")
+const rewire = require("rewire")
 
-const expect = chai.expect;
+const expect = chai.expect
 
 // Services
 // Use rewire to get/set un-exported functions
-var witAiSpeechModule = rewire('../../../src/services/speech/wit-ai.js');
+var witAiSpeechModule = rewire('../../../src/services/speech/wit-ai.js')
 
 describe('WIT AI Speech API', function () {
   describe('.start', function () {

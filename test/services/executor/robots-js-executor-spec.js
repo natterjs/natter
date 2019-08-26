@@ -1,6 +1,6 @@
 // Libraries
-const chai = require('chai');
-const expect = chai.expect;
+const chai = require('chai')
+const expect = chai.expect
 const sinon = require('sinon')
 
 // Services
@@ -25,10 +25,10 @@ describe('Robot JS executor', function () {
       robotJSExecutor.tree(data, executions)
 
       // Assert
-      expect(executions['key-tap'].calledOnce).to.be.true;
-      expect(executions['key-tap'].firstCall.args[0]).to.equal('enter');
-      expect(executions['key-tap'].firstCall.args[1]).to.eql(['']);
-    });
+      expect(executions['key-tap'].calledOnce).to.be.true
+      expect(executions['key-tap'].firstCall.args[0]).to.equal('enter')
+      expect(executions['key-tap'].firstCall.args[1]).to.eql([''])
+    })
 
     it('single key-toggle', function () {
       // Arrange
@@ -47,11 +47,11 @@ describe('Robot JS executor', function () {
       robotJSExecutor.tree(data, executions)
 
       // Assert
-      expect(executions['key-toggle'].calledOnce).to.be.true;
-      expect(executions['key-toggle'].firstCall.args[0]).to.equal('enter');
-      expect(executions['key-toggle'].firstCall.args[1]).to.eql('down');
-      expect(executions['key-toggle'].firstCall.args[2]).to.eql(['']);
-    });
+      expect(executions['key-toggle'].calledOnce).to.be.true
+      expect(executions['key-toggle'].firstCall.args[0]).to.equal('enter')
+      expect(executions['key-toggle'].firstCall.args[1]).to.eql('down')
+      expect(executions['key-toggle'].firstCall.args[2]).to.eql([''])
+    })
 
     it('single text', function () {
       // Arrange
@@ -70,8 +70,8 @@ describe('Robot JS executor', function () {
       robotJSExecutor.tree(data, executions)
 
       // Assert
-      expect(executions.text.calledOnce).to.be.true;
-      expect(executions.text.firstCall.args[0]).to.equal('some example text');
-    });
-  });
+      expect(executions.text.calledOnce).to.be.true
+      expect(executions.text.firstCall.args[0]).to.equal('some example text')
+    })
+  })
 })
