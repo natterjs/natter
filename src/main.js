@@ -141,7 +141,7 @@ setupKeyboard()
 
 // Speech processing function used to inject into the speech api client
 //
-// 1. Broadacast to the main window to show the application is thinking
+// 1. Broadcast to the main window to show the application is thinking
 // 2. Parse the data by the selected parsing adapter
 // 3. Execute the commands using the chosen executor
 const processSpeech = (data) => {

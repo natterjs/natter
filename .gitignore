@@ -6,3 +6,4 @@ settings.json
 .runtime.config
 package-lock.json
 config/credentials
+*.log
