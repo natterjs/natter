@@ -1,6 +1,6 @@
 // Libraries
-const chai = require("chai");
-const expect = chai.expect;
+const chai = require("chai")
+const expect = chai.expect
 
 // Services
 import simpleTextParser from '../../../src/services/parser/simple-text-parser.js'
@@ -51,5 +51,5 @@ describe('Simple Text Parser', function () {
       // Assert
       expect(parsingTree).to.deep.equal(expectation)
     })
-  });
+  })
 })
