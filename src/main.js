@@ -96,4 +96,4 @@ app.on('activate', () => {
 })
 
 // Execute the main applications business logic
-run()
+run(mainWindow)
