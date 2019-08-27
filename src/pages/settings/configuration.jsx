@@ -10,6 +10,7 @@ export default class Configuration extends React.Component {
     const userPreferences = new Store({
       name: 'user-preferences'
     })
+
     return (
       <Container>
         <Button primary onClick={() => userPreferences.openInEditor()} >
