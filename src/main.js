@@ -1,125 +1,99 @@
-// Electron
-import { app, BrowserWindow } from "electron";
-import installExtension, { REACT_DEVELOPER_TOOLS } from "electron-devtools-installer";
-import { enableLiveReload } from "electron-compile";
-import { ipcMain } from "electron"
-const path = require('path')
+// main //
+//
+// Main creates all the windows required for running the app.
+//
+// If windows are toggle from renders it should be handled here as well
+// using a broadcaster.
 
 // Libraries
-import Store from "electron-store";
+import { app, BrowserWindow } from 'electron'
+import { ipcMain } from 'electron'
+import path from 'path'
 
-// Services
-import executors from "./services/executors";
-import parsers from "./services/parsers";
-import speech from "./services/speech";
+// Run - The main function
+import run from './services/run'
 
-// Default settings and objects
-import keyboard from "./config/default-grammars/keyboard"
+let mainWindow
 
-// SetUp //
-const isDevMode = process.env.NODE_ENV === "development"
-const isDebugMode = (process.env.DEBUG === "true")
-if (isDevMode) {
-  enableLiveReload({ strategy: "react-hmr" });
-}
-// Create user preferences store. On initial load they will need a keyboard
-// But on the second load their keyboards should be stored.
-const userPreferences = new Store({
-  name: "user-preferences",
-  defaults: {
-    speechAdapter: "google-speech-api",
-    parser: "simple-text-parser",
-    executor: "robot-js",
-    keyboard: keyboard
-  },
-});
-
-
-let mainWindow;
-const createWindow = async () => {
+const createMainWindow = async () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    minWidth: 980,
+    minWidth: 1014,
+    maxWidth: 1014,
     minHeight: 60,
     maxHeight: 60,
+    title: 'Natter',
     show: false,
-    title: "Natter",
-    transparent: true,
     frame: false,
     x: 30,
     y: 70,
     icon: path.join(__dirname, 'assets/icons/64x64.png')
-  });
-
-  // and load the index.html of the app.
-  mainWindow.loadURL(`file://${__dirname}/index.html`);
-
-  // Open the DevTools.
-  if (isDebugMode) {
-    await installExtension(REACT_DEVELOPER_TOOLS);
-    mainWindow.webContents.openDevTools();
-  }
-
-  mainWindow.once('ready-to-show', () => {
-    mainWindow.show()
   })
 
-  mainWindow.on("closed", () => {
-    mainWindow = null;
-  });
-};
+  // and load the index.html of the app.
+  mainWindow.loadURL(`file://${__dirname}/windows/app.html`)
+  // and when it's ready to show reveal it
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show()
+    if (process.env.NODE_ENV === 'development') {
+      mainWindow.webContents.openDevTools({ mode: 'detach' })
+    }
+  })
+  // and ensure it cannot be hidden when closed
+  mainWindow.on('closed', () => {
+    mainWindow = null
+  })
+}
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.on("ready", createWindow);
+let settingsWindow = null
+
+const openSettingsWindow = async () => {
+  if (settingsWindow === null) {
+    // Create the browser window.
+    settingsWindow = new BrowserWindow({
+      title: 'Natter - Settings',
+      show: false,
+      icon: path.join(__dirname, 'assets/icons/64x64.png')
+    })
+    // and load the index.html of the app.
+    settingsWindow.loadURL(`file://${__dirname}/windows/settings.html`)
+    // and when it's ready to show reveal it
+    settingsWindow.once('ready-to-show', () => {
+      settingsWindow.show()
+      if (process.env.NODE_ENV === 'development') {
+        settingsWindow.webContents.openDevTools({ mode: 'detach' })
+      }
+    })
+  } else {
+    settingsWindow.focus()
+  }
+  // and ensure it cannot be hidden when closed
+  settingsWindow.on('closed', () => {
+    settingsWindow = null
+  })
+}
+
+// Allow the renderer thread to call for a new window to be opened
+ipcMain.on('open-settings-window', function (event, data) {
+  openSettingsWindow()
+})
+
+// This method will be called when Electron has finished initialization
+app.on('ready', createMainWindow)
 
 // Quit when all windows are closed.
-app.on("window-all-closed", () => {
-  // On OS X it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== "darwin") {
-    app.quit();
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit()
   }
-});
+})
 
-app.on("activate", () => {
-  // On OS X it"s common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
+// Create the window if we try and context switch and it is closed
+app.on('activate', () => {
   if (mainWindow === null) {
-    createWindow();
+    createMainWindow()
   }
-});
+})
 
-
-const parser = userPreferences.get("parser");
-const executor = userPreferences.get("executor");
-const userKeyboard = userPreferences.get("keyboard");
-
-const setupKeyboard = () => {
-  for (let key in keyboard.keys) {
-    parsers[parser]["addKey"](RegExp("\\s{0,1}" + key + "\\s{0,1}"), 'key-tap', keyboard.keys[key])
-  }
-}
-
-setupKeyboard()
-
-// Speech processing function used to inject into the speech api client
-const processSpeech = (data) => {
-  mainWindow.webContents.send('active-transcription', data);
-  let dataTree = parsers[parser]["parse"](data);
-  executors[executor]["tree"](dataTree);
-}
-
-// Encapsulating the speech broadcast callback function to start
-// the currently configured speech adapter
-ipcMain.on("toggle-speech", function(event, data) {
-  console.log(`Main Recieved ->`);
-  console.log(data);
-
-  const speechAdapter = userPreferences.get("speechAdapter");
-  const adapter = speech.adapters[speechAdapter]
-  data === "start" ? adapter.start(processSpeech) : adapter.stop();
-});
-
-
+// Execute the main applications business logic
+run()

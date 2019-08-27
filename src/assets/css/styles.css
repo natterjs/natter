@@ -1,0 +1,14 @@
+#draggable-handle {
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+  display: block;
+  padding: 0;
+  cursor: grab;
+}
+
+#draggable-handle > div {
+  color: azure;
+  width: 8px;
+  height: 60px;
+  box-shadow: 1px 1px 0px gray;
+}

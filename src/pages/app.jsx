@@ -2,10 +2,10 @@
 import React from 'react'
 
 // Components
-import Navbar from './components/navigation/navbar'
+import Navbar from '../components/navigation/navbar'
 
 // Services
-import speech from './services/speech'
+import speech from '../services/speech'
 
 export default class App extends React.Component {
   render(){
