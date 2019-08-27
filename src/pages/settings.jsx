@@ -1,6 +1,6 @@
 // Libraries
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 // Import pages
 import Configuration from './settings/configuration'
@@ -11,16 +11,16 @@ import Keyboard from './settings/keyboard'
 import SettingsMenu from '../components/settings/settings-menu'
 
 export default class Settings extends React.Component {
-  render(){
+  render() {
     return (
       <Router>
         <div>
         <SettingsMenu />
           <Switch>
-            <Route exact path="/" component={Configuration} />
-            <Route path="/grammars" component={Grammars} />
-            <Route path="/keyboard" component={Keyboard} />
-            <Redirect to="/" />
+            <Route exact path='/' component={Configuration} />
+            <Route path='/grammars' component={Grammars} />
+            <Route path='/keyboard' component={Keyboard} />
+            <Redirect to='/' />
           </Switch>
         </div>
       </Router>

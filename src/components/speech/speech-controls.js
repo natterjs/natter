@@ -32,26 +32,18 @@ export default class SpeechControls extends React.Component {
     customLogger('Mounting Speech Controls to DOM')
 
     const toggleSpeech = () => {
-      let recording = this.state.recording
-      this.setState({
-        recording: !recording
-      })
-    }
+      let recording = !this.state.recording
+      let thinking = !this.state.thinking
+      let command = recording ? 'start' : 'stop'
+      let transcript = recording ? 'Listening...' : 'Standby'
 
-    const start = () => {
-      toggleSpeech()
       this.setState({
-        transcript: "Listening..."
+        recording: recording,
+        thinking: thinking,
+        transcript: transcript
       })
-      return broadcasters['client']('toggle-speech', 'start')
-    }
 
-    const stop = () => {
-      toggleSpeech()
-      this.setState({
-        transcript: "Standby"
-      })
-      return broadcasters['client']('toggle-speech', 'stop')
+      return broadcasters['client']('toggle-speech', command)
     }
 
     const openSettings = () => {
@@ -61,12 +53,11 @@ export default class SpeechControls extends React.Component {
     const renderLoading = () => {
       return (
         <Input
-          loading={this.state.thinking}
           value={this.state.transcript}
           disabled={!this.state.recording}
           inverted
           style={{ minWidth:"800px" }}
-           />
+        />
       )
     }
 
@@ -75,17 +66,14 @@ export default class SpeechControls extends React.Component {
         <Menu.Item>
           {renderLoading()}
         </Menu.Item>
-          <Menu.Item>
+        <Menu.Item>
           <Button.Group>
-            <Button positive disabled={this.state.recording} onClick={start}>on</Button>
-            <Button.Or text='S' onClick={openSettings} id='open-settings' />
-            <Button negative disabled={!this.state.recording} onClick={stop}>off</Button>
+            <Button positive toggle loading={this.state.thinking} onClick={toggleSpeech}>rec</Button>
+            <Button information onClick={openSettings} id='open-settings'>menu</Button>
           </Button.Group>
         </Menu.Item>
         <Menu.Item id='draggable-handle'>
-          <span>..</span><br/>
-          <span>..</span><br/>
-          <span>..</span>
+          <div></div>
         </Menu.Item>
       </Menu>
     );

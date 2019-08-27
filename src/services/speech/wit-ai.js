@@ -42,13 +42,13 @@ const recorder = (processSpeech, apiKey) => {
 const postAudioData = (callBack, apiKey) => {
   return (
     request.post({
-        'url'     : 'https://api.wit.ai/speech?client=chromium&lang=en-us&output=json',
-        'headers' : {
-          'Accept': 'application/vnd.wit.20160202+json',
-          'Authorization': 'Bearer ' + apiKey,
-          'Content-Type': 'audio/wav'
-        }
-      }, callBack)
+      'url'     : 'https://api.wit.ai/speech?client=chromium&lang=en-us&output=json',
+      'headers' : {
+        'Accept': 'application/vnd.wit.20160202+json',
+        'Authorization': 'Bearer ' + apiKey,
+        'Content-Type': 'audio/wav'
+      }
+    }, callBack)
   )
 }
 

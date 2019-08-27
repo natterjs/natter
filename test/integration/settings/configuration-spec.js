@@ -1,13 +1,13 @@
-const testhelper = require("../../support/spectron-helper")
+const testhelper = require('../../support/spectron-helper')
 const app = testhelper.initialiseSpectron()
 const assert = require('assert')
 
-const chaiAsPromised = require("chai-as-promised")
-const chai = require("chai")
+const chaiAsPromised = require('chai-as-promised')
+const chai = require('chai')
 chai.should()
 chai.use(chaiAsPromised)
 
-describe("Settings - Configurations", function () {
+describe('Settings - Configurations', function () {
   this.timeout(30000)
 
   // Start spectron
@@ -23,10 +23,10 @@ describe("Settings - Configurations", function () {
     }
   })
 
-  describe("page", function () {
-    it("has default content", function () {
+  describe('page', function () {
+    it('has default content', function () {
       app.client.element('#open-settings').click()
-      return app.client.windowByIndex(1).getText('#configuration').should.eventually.equal("Configuration")
+      return app.client.windowByIndex(1).getText('#configuration').should.eventually.equal('Configuration')
     })
   })
 })
