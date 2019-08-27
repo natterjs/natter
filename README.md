@@ -1,6 +1,6 @@
-| MASTER | DEVELOP | Code Quality |
-| --- | --- | --- |
-| [![CircleCI](https://circleci.com/gh/natterjs/natter/tree/master.svg?style=svg)](https://circleci.com/gh/natterjs/natter/tree/master) |[![CircleCI](https://circleci.com/gh/natterjs/natter/tree/develop.svg?style=svg)](https://circleci.com/gh/natterjs/natter/tree/develop) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/0f9b33a6c79d425eb8fb7a9e1eddc89e)](https://app.codacy.com/app/natterjs/natter?utm_source=github.com&utm_medium=referral&utm_content=natterjs/natter&utm_campaign=Badge_Grade_Dashboard) |
+| MASTER | Code Quality |
+| --- | --- |
+| [![CircleCI](https://circleci.com/gh/natterjs/natter/tree/master.svg?style=svg)](https://circleci.com/gh/natterjs/natter/tree/master) | [![Codacy Badge](https://api.codacy.com/project/badge/Grade/0f9b33a6c79d425eb8fb7a9e1eddc89e)](https://app.codacy.com/app/natterjs/natter?utm_source=github.com&utm_medium=referral&utm_content=natterjs/natter&utm_campaign=Badge_Grade_Dashboard) |
 
 | Linux | Windows | MacOS |
 | ---| --- | --- |
