@@ -1,6 +1,6 @@
 // Libraries
-import React from 'react';
-import Store from 'electron-store';
+import React from 'react'
+import Store from 'electron-store'
 
 // Components
 import { Button, Container } from 'semantic-ui-react'
