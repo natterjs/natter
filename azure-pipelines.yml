@@ -49,21 +49,7 @@ steps:
 
 - task: PublishPipelineArtifact@0
   inputs:
-    artifactName: 'natter_linux_build'
+    artifactName: 'natter_$(Agent.OS)_build'
     targetPath: 'out/make'
   condition: eq( variables['Agent.OS'], 'Linux' )
   displayName: 'Copy outputs for Linux'
-
-- task: PublishPipelineArtifact@0
-  inputs:
-    artifactName: 'natter_mac_build'
-    targetPath: 'out/make'
-  condition: eq( variables['Agent.OS'], 'Darwin' )
-  displayName: 'Copy outputs for Mac'
-
-- task: PublishPipelineArtifact@0
-  inputs:
-    artifactName: 'natter_windows_build'
-    targetPath: 'out/make'
-  condition: eq( variables['Agent.OS'], 'Windows_NT' )
-  displayName: 'Copy outputs for Windows'
