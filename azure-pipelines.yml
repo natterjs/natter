@@ -51,5 +51,4 @@ steps:
   inputs:
     artifactName: 'natter_$(Agent.OS)_build'
     targetPath: 'out/make'
-  condition: eq( variables['Agent.OS'], 'Linux' )
-  displayName: 'Copy outputs for Linux'
+  displayName: 'Publish $(Agent.OS) outputs'
