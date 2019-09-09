@@ -21,3 +21,4 @@ run-test: ## Run all tests
 
 build:
 	yarn make
+

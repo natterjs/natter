@@ -17,7 +17,7 @@ const initialiseSpectron = () => {
           NODE_ENV: "development"
       },
       startTimeout: 30000,
-      chromeDriverLogPath: '../chromedriverlog.txt'
+      chromeDriverLogPath: '../tmp/chromedriverlog.txt'
   })
 }
 
