@@ -17,26 +17,26 @@ import customLogger from './loggers/custom-logger'
 // Default settings and objects
 import keyboard from '../config/default-grammars/keyboard'
 
+// Create user preferences store. On initial load they will need a keyboard
+// But on the second load their keyboards should be stored.
+const userPreferences = new Store({
+  name: 'user-preferences',
+  defaults: {
+    speechAdapter: 'wit-ai-api',
+    parser: 'simple-text-parser',
+    executor: 'robot-js',
+    keyboard: keyboard,
+    'wit-ai-api': 'LWYUABH7YMDJ6NZRFYMU3EWR4AVKAEB3'
+  }
+})
+
 const run = (mainWindow) => {
-
-  // Create user preferences store. On initial load they will need a keyboard
-  // But on the second load their keyboards should be stored.
-  const userPreferences = new Store({
-    name: 'user-preferences',
-    defaults: {
-      speechAdapter: 'wit-ai-api',
-      parser: 'simple-text-parser',
-      executor: 'robot-js',
-      keyboard: keyboard,
-      'wit-ai-api': 'LWYUABH7YMDJ6NZRFYMU3EWR4AVKAEB3'
-    }
-  })
-
   // Require the users preferred adapters from the store
   const parser = userPreferences.get('parser')
   const executor = userPreferences.get('executor')
   const userKeyboard = userPreferences.get('keyboard')
   const speechAdapter = userPreferences.get('speechAdapter')
+  console.log(speechAdapter)
 
   // Load the keyboard from the user preferences
   //
@@ -69,11 +69,10 @@ const run = (mainWindow) => {
   // 1. Load the adapter using the user-preference
   // 2. If we received start - begin recording, otherwise the command must be stop
   ipcMain.on('toggle-speech', function (event, data) {
+    console.log("toggleing is fun")
     const adapter = speech.adapters[speechAdapter]
-    const {
-      apiKey
-    } = userPreferences.get(speechAdapter)
-    data === 'start' ? adapter.start(processSpeech, apiKey) : adapter.stop()
+    const config = userPreferences.get(speechAdapter)
+    data === 'start' ? adapter.start(processSpeech, config) : adapter.stop()
 
     customLogger(data, 'TOGGLE SPEECH')
   })
