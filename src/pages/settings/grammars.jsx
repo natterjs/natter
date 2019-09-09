@@ -1,7 +1,12 @@
-import React from 'react';
+import React from 'react'
+import { Container } from 'semantic-ui-react'
 
 export default class Grammars extends React.Component {
   render() {
-    return <p>Grammars</p>
+    return (
+      <Container>
+        <p>Grammars</p>
+      </Container>
+    )
   }
 }

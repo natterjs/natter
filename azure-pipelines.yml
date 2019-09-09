@@ -21,43 +21,34 @@ strategy:
 pool:
   vmImage: $(imageName)
 
+variables:
+  YARN_CACHE_FOLDER: $(Pipeline.Workspace)/.yarn
+
 steps:
 - task: NodeTool@0
   inputs:
     versionSpec: '10.13.x'
   displayName: 'Install Node.js'
 
-# Linux
 - script: |
     sudo apt-get -y update && sudo apt-get -y install libxtst-dev libpng++-dev sox fakeroot
   condition: eq( variables['Agent.OS'], 'Linux' )
   displayName: 'Get dependancies for Linux'
 
-- script: |
-    npm install
-  displayName: 'Install all NPM packages'
+- task: CacheBeta@0
+  inputs:
+    key: yarn | $(Agent.OS) | yarn.lock
+    path: $(YARN_CACHE_FOLDER)
+  displayName: Cache Yarn packages
+
+- script: yarn --frozen-lockfile
 
 - script: |
-    npm run make
+    yarn make
   displayName: 'Make the binaries'
 
 - task: PublishPipelineArtifact@0
   inputs:
-    artifactName: 'natter_linux_build'
+    artifactName: 'natter_$(Agent.OS)_build'
     targetPath: 'out/make'
-  condition: eq( variables['Agent.OS'], 'Linux' )
-  displayName: 'Copy outputs for Linux'
-
-- task: PublishPipelineArtifact@0
-  inputs:
-    artifactName: 'natter_mac_build'
-    targetPath: 'out/make'
-  condition: eq( variables['Agent.OS'], 'Darwin' )
-  displayName: 'Copy outputs for Mac'
-
-- task: PublishPipelineArtifact@0
-  inputs:
-    artifactName: 'natter_windows_build'
-    targetPath: 'out/make'
-  condition: eq( variables['Agent.OS'], 'Windows_NT' )
-  displayName: 'Copy outputs for Windows'
+  displayName: 'Publish $(Agent.OS) outputs'

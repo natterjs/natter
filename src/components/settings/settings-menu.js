@@ -8,23 +8,23 @@ import path from 'path'
 export default class SettingsMenu extends Component {
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = {
+      activeItem: 'Configuration'
+    }
   }
 
+
   render () {
+    const activate = (name) => this.setState({ activeItem: name })
     const { activeItem } = this.state
-    const handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
     return (
       <Menu stackable>
-        <Menu.Item>
-          <img src={`file://${path.resolve('.')}/src/assets/icons/64x64.png`} />
-        </Menu.Item>
         <Link to="/">
           <Menu.Item
             name='Configuration'
             active={activeItem === 'Configuration'}
-            onClick={this.handleItemClick}
+            onClick={() => activate('Configuration')}
             id='configuration'
           >
             Configuration
@@ -34,7 +34,7 @@ export default class SettingsMenu extends Component {
           <Menu.Item
             name='Grammars'
             active={activeItem === 'Grammars'}
-            onClick={this.handleItemClick}
+            onClick={() => activate('Grammars')}
             id='grammars'
           >
             Grammars
@@ -45,7 +45,7 @@ export default class SettingsMenu extends Component {
           <Menu.Item
             name='Keyboard'
             active={activeItem === 'Keyboard'}
-            onClick={this.handleItemClick}
+            onClick={() => activate('Keyboard')}
             id='keyboard'
           >
             Keyboard

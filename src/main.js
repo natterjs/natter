@@ -79,7 +79,11 @@ ipcMain.on('open-settings-window', function (event, data) {
 })
 
 // This method will be called when Electron has finished initialization
-app.on('ready', createMainWindow)
+app.on('ready', () => {
+  createMainWindow().then(() => {
+    run(mainWindow)
+  })
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -94,6 +98,3 @@ app.on('activate', () => {
     createMainWindow()
   }
 })
-
-// Execute the main applications business logic
-run()
