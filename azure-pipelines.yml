@@ -21,24 +21,30 @@ strategy:
 pool:
   vmImage: $(imageName)
 
+variables:
+  YARN_CACHE_FOLDER: $(Pipeline.Workspace)/.yarn
+
 steps:
 - task: NodeTool@0
   inputs:
     versionSpec: '10.13.x'
   displayName: 'Install Node.js'
 
-# Linux
 - script: |
     sudo apt-get -y update && sudo apt-get -y install libxtst-dev libpng++-dev sox fakeroot
   condition: eq( variables['Agent.OS'], 'Linux' )
   displayName: 'Get dependancies for Linux'
 
-- script: |
-    npm install
-  displayName: 'Install all NPM packages'
+- task: CacheBeta@0
+  inputs:
+    key: yarn | $(Agent.OS) | yarn.lock
+    path: $(YARN_CACHE_FOLDER)
+  displayName: Cache Yarn packages
+
+- script: yarn --frozen-lockfile
 
 - script: |
-    npm run make
+    yarn make
   displayName: 'Make the binaries'
 
 - task: PublishPipelineArtifact@0

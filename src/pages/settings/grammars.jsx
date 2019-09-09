@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import { Container } from 'semantic-ui-react'
 
 export default class Grammars extends React.Component {

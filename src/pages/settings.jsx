@@ -1,8 +1,7 @@
 // Libraries
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import Store from 'electron-store';
-
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
+import Store from 'electron-store'
 
 // Import pages
 import Configuration from './settings/configuration'

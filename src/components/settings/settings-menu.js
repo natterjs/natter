@@ -10,12 +10,12 @@ export default class SettingsMenu extends Component {
     super(props)
     this.state = {
       activeItem: 'Configuration'
-     }
+    }
   }
 
 
-  render() {
-    const activate = (name ) => this.setState({ activeItem: name })
+  render () {
+    const activate = (name) => this.setState({ activeItem: name })
     const { activeItem } = this.state
 
     return (

@@ -36,7 +36,6 @@ const run = (mainWindow) => {
   const executor = userPreferences.get('executor')
   const userKeyboard = userPreferences.get('keyboard')
   const speechAdapter = userPreferences.get('speechAdapter')
-  console.log(speechAdapter)
 
   // Load the keyboard from the user preferences
   //
@@ -69,7 +68,6 @@ const run = (mainWindow) => {
   // 1. Load the adapter using the user-preference
   // 2. If we received start - begin recording, otherwise the command must be stop
   ipcMain.on('toggle-speech', function (event, data) {
-    console.log("toggleing is fun")
     const adapter = speech.adapters[speechAdapter]
     const config = userPreferences.get(speechAdapter)
     data === 'start' ? adapter.start(processSpeech, config) : adapter.stop()
